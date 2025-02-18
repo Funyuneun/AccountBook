@@ -1,8 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>線上帳本</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="每日記帳">
+    <title>👛 每日記帳</title>
+  <meta name="robots" content="noindex">
+    <link rel="apple-touch-icon" href="path/to/your/icon.png">
     <style>
         body {
             font-family: 'Noto Sans TC', sans-serif;
@@ -31,7 +36,7 @@
             color: #5d4037;
             text-align: center;
             margin-bottom: 25px;
-            font-size: 28px;
+            font-size: 30px;
             font-weight: bold;
         }
 
@@ -202,9 +207,9 @@
 
         #popup button {
             background-color: #ffb74d; /* 彈窗按鈕顏色與 submit 按鈕一致 */
-            width: auto; /* 彈窗按鈕寬度自動調整，更符合按鈕文字 */
-            padding: 12px 30px; /* 彈窗按鈕左右內距加大，更好按 */
-            margin: 10px 10px; /* 彈窗按鈕左右間距縮小，更緊湊 */
+            width: 44%; /* 彈窗按鈕寬度自動調整，更符合按鈕文字 */
+            padding: 15px 30px; /* 彈窗按鈕左右內距加大，更好按 */
+            margin: 0px 5px; /* 彈窗按鈕左右間距縮小，更緊湊 */
         }
 
         #popup button:hover {
@@ -333,7 +338,7 @@
             }
 
             label {
-                font-size: 1em;
+                font-size: 1.2em;
                 margin-bottom: 5px;
             }
 
@@ -360,7 +365,7 @@
             }
 
             button[type="submit"] { /* 手機螢幕下提交按鈕維持置中拉長 */
-                width: 70%;
+                width: 100%;
                 margin-top: 20px; /* 手機螢幕下提交按鈕與上方間隔 */
                 margin-bottom: 20px; /* 手機螢幕下提交按鈕下外距 */
             }
@@ -406,16 +411,18 @@
             #popup {
                 padding: 20px;
                 border-radius: 10px;
+                margin:20px
             }
 
             #popup h3 {
-                font-size: 1.3em;
+                font-size: 1.5em;
                 margin-bottom: 15px;
             }
 
             #popup button {
-                padding: 10px 25px;
+                padding: 15px 25px;
                 margin: 8px 10px;
+                width:85%;
             }
 
         #categoryInfoPopup {
@@ -475,49 +482,50 @@
     <div class="form-container">
 
         <form id="expenseForm">
-            <h2>記錄開支</h2>
+            <h2><i class="ri-money-dollar-circle-fill"></i> 每日記帳</h2>
             <div id="form-rows">
                 <div class="row" id="row-1">
                     <div class="form-group">
-                        <label for="category-1">類型<span class="info-icon" onclick="showCategoryInfo()">ℹ️</span></label>
+                        <label for="category-1"><i class="ri-bookmark-3-fill"></i> 類型*<span class="info-icon" onclick="showCategoryInfo()">ℹ️</span></label>
                         <select id="category-1" class="category" name="category[]" required>
-                            <option value="">-- 請選擇類別 --</option>
-                            <option value="伙食費">伙食費</option>
-                            <option value="日用品">日用品</option>
-                            <option value="醫藥品">醫藥品</option>
-                            <option value="交通費">交通費</option>
-                            <option value="娛樂費">娛樂費</option>
-                            <option value="其他">其他</option>
+                    <option value="">-- 支出類別 --</option>
+                    <option value="伙食費">伙食費</option>
+                    <option value="日用品">日用品</option>
+                    <option value="醫療費">醫藥品</option>
+                    <option value="交際費">交際費</option>
+                    <option value="娛樂費">娛樂費</option>
+                    <option value="特別費">特別費</option>
+                    <option value="其它">其它</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="amount-1">金額 (必填)</label>
+                        <label for="amount-1"><i class="ri-money-dollar-circle-fill"></i> 金額 *</label>
                         <input type="number" id="amount-1" class="amount" name="amount[]" required oninput="updateTotalAmount()">
                     </div>
                     <div class="form-group">
-                        <label for="item-1">項目</label>
+                        <label for="item-1"><i class="ri-file-list-3-fill"></i> 項目</label>
                         <input type="text" id="item-1" class="item" name="item[]">
                     </div>
                     <div class="form-group">
-                        <label for="payment-1">支付方式</label>
-                        <select id="payment-1" class="payment" name="payment[]" required>
-                            <option value="">-- 請選擇支付方式 --</option>
+                        <label for="payment-1"><i class="ri-refund-fill"></i> 支付</label>
+                        <select id="payment-1" class="payment" name="payment[]">
+                            <option value="">-- 支付方式 --</option>
+                            <option value="台新">台新</option>
                             <option value="現金">現金</option>
-                            <option value="信用卡">信用卡</option>
-                            <option value="行動支付">行動支付</option>
+                            <option value="一銀">一銀</option>
                             <option value="其他">其他</option>
                         </select>
                     </div>
                     <div class="form-group merchant-group">
-                        <label for="merchant-1">購買商家</label>
-                        <select id="merchant-1" class="merchant" name="merchant[]" required onchange="toggleOtherMerchantInput(this)">
-                            <option value="">-- 請選擇商家 --</option>
-                            <option value="全家">全家</option>
-                            <option value="7-11">7-11</option>
-                            <option value="蝦皮">蝦皮</蝦皮>
-                            <option value="PChome">PChome</option>
-                            <option value="Momo">Momo</Momo</option>
-                            <option value="其他">其他</option>
+                        <label for="merchant-1"><i class="ri-store-3-fill"></i> 商家　</label>
+                        <select id="merchant-1" class="merchant" name="merchant[]" onchange="toggleOtherMerchantInput(this)">
+                    <option value="">-- 購買商家 --</option>
+                    <option value="全家">全家</option>
+                    <option value="里仁">里仁</option>
+                    <option value="蝦皮">蝦皮</option>
+                    <option value="7-11">7-11</option>
+                    <option value="PChome">PChome</option>
+                    <option value="其他">其他</option>
                         </select>
                          <input type="text" class="otherMerchant" name="otherMerchant[]" style="display:none;" placeholder="請填寫商家名稱">
                     </div>
@@ -585,44 +593,45 @@
             newRow.id = `row-${rowCount}`;
             newRow.innerHTML = `
             <div class="form-group">
-                <label for="category-${rowCount}">類型<span class="info-icon" onclick="showCategoryInfo()">ℹ️</span></label>
+                <label for="category-${rowCount}"><i class="ri-bookmark-3-fill"></i> 類型*<span class="info-icon" onclick="showCategoryInfo()">ℹ️</span></label>
                 <select id="category-${rowCount}" class="category" name="category[]" required>
-                    <option value="">-- 請選擇類別 --</option>
+                    <option value="">-- 支出類別 --</option>
                     <option value="伙食費">伙食費</option>
                     <option value="日用品">日用品</option>
-                    <option value="醫藥品">醫藥品</option>
-                    <option value="交通費">交通費</option>
+                    <option value="醫療費">醫藥品</option>
+                    <option value="交際費">交際費</option>
                     <option value="娛樂費">娛樂費</option>
-                    <option value="其他">其他</option>
+                    <option value="特別費">特別費</option>
+                    <option value="其它">其它</option>
                     </select>
             </div>
             <div class="form-group">
-                <label for="amount-${rowCount}">金額 (必填)</label>
+                <label for="amount-${rowCount}"><i class="ri-money-dollar-circle-fill"></i> 金額 *</label>
                 <input type="number" id="amount-${rowCount}" class="amount" name="amount[]" required oninput="updateTotalAmount()">
             </div>
             <div class="form-group">
-                <label for="item-${rowCount}">項目</label>
+                <label for="item-${rowCount}"><i class="ri-file-list-3-fill"></i> 項目項目</label>
                 <input type="text" id="item-${rowCount}" class="item" name="item[]">
             </div>
             <div class="form-group">
-                <label for="payment-${rowCount}">支付方式</label>
-                <select id="payment-${rowCount}" class="payment" name="payment[]" required>
-                    <option value="">-- 請選擇支付方式 --</option>
+                <label for="payment-${rowCount}"><i class="ri-refund-fill"></i> 支付</label>
+                <select id="payment-${rowCount}" class="payment" name="payment[]">
+                    <option value="">-- 支付方式 --</option>
+                    <option value="台新">台新</option>
                     <option value="現金">現金</option>
-                    <option value="信用卡">信用卡</option>
-                    <option value="行動支付">行動支付</option>
+                    <option value="一銀">一銀</option>
                     <option value="其他">其他</option>
                     </select>
             </div>
             <div class="form-group merchant-group">
-                <label for="merchant-${rowCount}">購買商家</label>
-                <select id="merchant-${rowCount}" class="merchant" name="merchant[]" required onchange="toggleOtherMerchantInput(this)">
-                    <option value="">-- 請選擇商家 --</option>
+                <label for="merchant-${rowCount}"><i class="ri-store-3-fill"></i> 商家　</label>
+                <select id="merchant-${rowCount}" class="merchant" name="merchant[]" onchange="toggleOtherMerchantInput(this)">
+                    <option value="">-- 購買商家 --</option>
                     <option value="全家">全家</option>
-                    <option value="7-11">7-11</option>
+                    <option value="里仁">里仁</option>
                     <option value="蝦皮">蝦皮</option>
+                    <option value="7-11">7-11</option>
                     <option value="PChome">PChome</option>
-                    <option value="Momo">Momo</Momo</option>
                     <option value="其他">其他</option>
                 </select>
                  <input type="text" class="otherMerchant" name="otherMerchant[]" style="display:none;" placeholder="請填寫商家名稱">
@@ -706,7 +715,7 @@
 
         // 查看家計簿
         function viewSpreadsheet() {
-            window.open('https://reurl.cc/M6KaWK', '_blank');
+            window.open('https://docs.google.com/spreadsheets/d/1-9jGuyXQsBmb_R_YgcFcGaEE0cmjNplfklivnRHoZ9E/edit?gid=187669044#gid=187669044', '_blank');
         }
 
         // 顯示測試彈跳視窗 (新增)
@@ -740,6 +749,15 @@
         window.onload = function () {
 
         };
+      
+      // iOS 全螢幕顯示
+        if (window.navigator.standalone) {
+            document.documentElement.requestFullscreen();
+        }
+
+        // robots.txt (請在您的 GitHub Pages 儲存庫根目錄建立 robots.txt 檔案)
+        // User-agent: *
+        // Disallow: /
     </script>
 </body>
 </html>
