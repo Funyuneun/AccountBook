@@ -77,7 +77,7 @@
         #popup button,
         #test-popup-button,
     .info-icon { /* 將 info-icon 加入按鈕通用樣式 */
-            padding: 12px 25px;
+            padding: 13px 25px;
             border: none;
             border-radius: 8px;
             color: white;
@@ -92,9 +92,9 @@
             display: block; /* 水平置中 */
             margin-left: auto; /* 水平置中 */
             margin-right: auto; /* 水平置中 */
-            width: 70%; /* 拉長為約三倍 (原寬度預估約 23%) */
-            margin-top: 25px; /* 與上方元素間隔 */
-            margin-bottom: 20px; /* 新增：向下移動間距 */
+            width: 100%; /* 拉長為約三倍 (原寬度預估約 23%) */
+            margin-top: 45px; /* 與上方元素間隔 */
+            margin-bottom: 10px; /* 新增：向下移動間距 */
         }
 
         button[type="submit"]:hover {
@@ -340,8 +340,13 @@
             input[type="text"],
             input[type="number"],
             select {
-                padding: 10px;
+                padding: 15px;
                 font-size: 0.95em;
+            }
+          
+            input[type="text"],
+            input[type="number"]{
+              width: calc(100% - 32px);
             }
 
             button[type="submit"],
@@ -386,7 +391,7 @@
 
             .row > .form-group {
                 margin-right: 0;
-                margin-bottom: 10px;
+                margin-bottom: 15px;
                 min-width: auto;
             }
 
@@ -448,14 +453,14 @@
         }
 
         .row > .form-group.merchant-group > select {
-            flex: 2; /* 下拉選單佔比較多空間 */
+            flex: 1; /* 下拉選單佔比較多空間 */
             margin-right: 10px; /* 與輸入框間隔 */
             width: auto; /* 寬度由 flexbox 控制 */
         }
 
         .row > .form-group.merchant-group > input.otherMerchant {
-            flex: 1; /* 輸入框佔較少空間 */
-            max-width: 150px; /* 限制最大寬度 */
+            flex: 2; /* 輸入框佔較少空間 */
+
         }
     }
 
