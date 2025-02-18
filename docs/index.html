@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>線上帳本</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500&display=swap" rel="stylesheet">
+<style>
+body {
+    font-family: 'Noto Sans TC', sans-serif;
+    font-size: 20px;
+    line-height: 1.8;
+    color: #4a4a4a;
+    background: linear-gradient(135deg, #fff5f5 0%, #fff9f0 100%);
+    margin: 0;
+    padding: 30px 20px;
+    min-height: 100vh;
+}
+
+h1 {
+    text-align: center;
+    color: #744c24;
+    margin-bottom: 30px;
+    font-weight: 500;
+    font-size: 2.2rem;
+}
+
+form {
+    max-width: 1000px;
+    margin: 30px auto;
+    padding: 40px;
+    border-radius: 16px;
+    background-color: #fff;
+    box-shadow: 0 10px 30px rgba(116, 76, 36, 0.1);
+}
+
+.expense-item {
+    padding: 30px;
+    margin-bottom: 25px;
+    border-radius: 12px;
+    background-color: #fffaf5;
+    border: 1px solid #f3e5d7;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+label {
+    margin-bottom: 12px;
+    font-weight: 500;
+    color: #744c24;
+    display: block;
+    font-size: 1.1rem;
+}
+
+input[type="text"],
+input[type="number"],
+select {
+    padding: 16px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    border: 2px solid #e6d5c5;
+    font-size: 1.1rem;
+    background-color: #fff;
+    color: #4a4a4a;
+    transition: all 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+select:focus {
+    border-color: #c4946b;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(196, 148, 107, 0.2);
+}
+
+select {
+    appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%23744c24" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    padding-right: 45px;
+}
+
+.remove-button {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background-color: #fff;
+    color: #d35d47;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.remove-button:hover {
+    background-color: #d35d47;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.add-button {
+    background-color: #88694d;
+    color: white;
+    border: none;
+    padding: 16px 35px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    margin-top: 30px;
+    align-self: center;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.3s ease;
+}
+
+.add-button:hover {
+    background-color: #744c24;
+    transform: translateY(-2px);
+}
+
+input[type="submit"] {
+    padding: 16px 40px;
+    margin-top: 40px;
+    border: none;
+    border-radius: 12px;
+    background-color: #4d8b4a;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    align-self: center;
+    transition: all 0.3s ease;
+}
+
+input[type="submit"]:hover {
+    background-color: #3d7a3a;
+    transform: translateY(-2px);
+}
+
+#successMessage {
+    text-align: center;
+    background-color: #ebf7eb;
+    color: #2e5a2c;
+    border: 2px solid #c8e6c8;
+    padding: 35px;
+    border-radius: 12px;
+    margin: 35px auto;
+    max-width: 1000px;
+}
+
+#successMessage p {
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+}
+
+.button-container {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 25px;
+}
+
+.button {
+    padding: 14px 30px;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+}
+
+.button-continue {
+    background-color: #88694d;
+    color: white;
+}
+
+.button-continue:hover {
+    background-color: #744c24;
+    transform: translateY(-2px);
+}
+
+.button-ledger {
+    background-color: #f0c987;
+    color: #744c24;
+}
+
+.button-ledger:hover {
+    background-color: #e6b765;
+    transform: translateY(-2px);
+}
+
+@media (min-width: 769px) {
+    .expense-item {
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        gap: 25px 30px;
+    }
+
+    .expense-item > label {
+        flex-basis: 150px;
+        text-align: right;
+        padding-right: 15px;
+        margin-top: 12px;
+    }
+
+    .expense-item > input,
+    .expense-item > select {
+        flex: 1;
+        min-width: 200px;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        font-size: 18px;
+        padding: 20px 15px;
+    }
+
+    h1 {
+        font-size: 1.9rem;
+    }
+
+    form {
+        padding: 25px;
+    }
+
+    .expense-item {
+        padding: 25px;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    select {
+        padding: 14px;
+        font-size: 1rem;
+    }
+
+    .button {
+        padding: 12px 25px;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    body {
+        font-size: 16px;
+    }
+
+    h1 {
+        font-size: 1.7rem;
+    }
+
+    form {
+        padding: 20px;
+    }
+
+    .expense-item {
+        padding: 20px;
+    }
+
+    .button-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .button {
+        justify-content: center;
+    }
+}
+</style>
+</head>
+<body>
+<h1>記錄開支</h1>
+<form id="expenseForm">
+    <div id="expenseItemsContainer">
+    </div>
+
+    <button type="button" id="addItemButton" class="add-button">
+        <i class="ri-add-line"></i> 增加項目
+    </button>
+    <input type="submit" value="提交">
+</form>
+
+<div id="successMessage" style="display:none;">
+    <p>✅ 已成功記錄支出！</p>
+    <div class="button-container">
+        <a href="#" id="continueButton" class="button button-continue">
+            <i class="ri-restart-line"></i> 繼續填寫
+        </a>
+        <a href="https://reurl.cc/M6KaWK" class="button button-ledger" target="_blank">
+            <i class="ri-book-open-line"></i> 前往帳本
+        </a>
+    </div>
+</div>
+
+<template id="expenseItemTemplate">
+    <div class="expense-item">
+        <button type="button" class="remove-button" onclick="removeItem(this)" title="刪除此筆支出">
+            <i class="ri-delete-bin-line"></i>
+        </button>
+        <label for="category">類別:</label>
+        <select class="category" name="category[]" required>
+            <option value="">-- 請選擇類別 --</option>
+            <option value="伙食費">伙食費</option>
+            <option value="日用品">日用品</option>
+            <option value="醫藥品">醫藥品</option>
+            <option value="交通費">交通費</option>
+            <option value="娛樂費">娛樂費</option>
+            <option value="其他">其他</option>
+        </select>
+
+        <label for="item">項目: (非必填)</label>
+        <input type="text" class="item" name="item[]">
+
+        <label for="amount">金額:</label>
+        <input type="number" class="amount" name="amount[]" required>
+
+        <label for="payment">支付方式:</label>
+        <select class="payment" name="payment[]" required>
+            <option value="">-- 請選擇支付方式 --</option>
+            <option value="現金">現金</option>
+            <option value="信用卡">信用卡</option>
+            <option value="行動支付">行動支付</option>
+            <option value="其他">其他</option>
+        </select>
+
+        <label for="merchant">購買商家:</label>
+        <select class="merchant" name="merchant[]" required onchange="toggleOtherMerchantInput(this)">
+            <option value="">-- 請選擇商家 --</option>
+            <option value="全家">全家</option>
+            <option value="7-11">7-11</option>
+            <option value="蝦皮">蝦皮</option>
+            <option value="PChome">PChome</option>
+            <option value="Momo">Momo</option>
+            <option value="其他">其他</option>
+        </select>
+        <input type="text" class="otherMerchant" name="otherMerchant[]" style="display:none;" placeholder="請填寫商家名稱">
+    </div>
+</template>
+
+<script>
+function toggleOtherMerchantInput(selectElement) {
+    const expenseItem = selectElement.closest('.expense-item');
+    const otherMerchantInput = expenseItem.querySelector('.otherMerchant');
+    
+    otherMerchantInput.style.display = selectElement.value === "其他" ? "block" : "none";
+    if (selectElement.value === "其他") {
+        otherMerchantInput.required = true;
+    } else {
+        otherMerchantInput.required = false;
+    }
+}
+
+function removeItem(button) {
+    const container = document.getElementById('expenseItemsContainer');
+    if (container.children.length > 1) {
+        button.closest('.expense-item').remove();
+    } else {
+        alert('至少需要保留一個支出項目');
+    }
+}
+
+function addItem() {
+    const template = document.getElementById('expenseItemTemplate');
+    const container = document.getElementById('expenseItemsContainer');
+    const newItem = template.content.cloneNode(true);
+    container.appendChild(newItem);
+}
+
+document.getElementById('addItemButton').onclick = addItem;
+
+document.getElementById('expenseForm').onsubmit = function(event) {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const expenseItems = document.querySelectorAll('.expense-item');
+    let submittedCount = 0;
+
+    expenseItems.forEach(item => {
+        let merchantValue = item.querySelector('.merchant').value;
+        const otherMerchantValue = item.querySelector('.otherMerchant').value;
+
+        if (merchantValue === '其他' && otherMerchantValue) {
+            merchantValue = otherMerchantValue;
+        }
+
+        const params = new URLSearchParams({
+            category: item.querySelector('.category').value,
+            item: item.querySelector('.item').value,
+            amount: item.querySelector('.amount').value,
+            payment: item.querySelector('.payment').value,
+            merchant: merchantValue,
+        }).toString();
+
+        fetch('https://script.google.com/macros/s/AKfycbxj5YJF7J1ih7Hv8rQm3-Ex4c4axZKq40nYYQdWeIrXGpVfZk5JfCuCBNfCM0THRTs-/exec?action=add&' + params)
+            .then(response => response.text())
+            .then(data => {
+                submittedCount++;
+                if (submittedCount === expenseItems.length) {
+                    document.getElementById('expenseForm').style.display = 'none';
+                    document.getElementById('successMessage').style.display = 'block';
+                }
+            })
+            .catch(error => {
+                alert('提交時發生錯誤，請稍後再試');
+                console.error('Error:', error);
+            });
+    });
+};
+
+document.getElementById('continueButton').onclick = function(e) {
+    e.preventDefault();
+    const container = document.getElementById('expenseItemsContainer');
+    container.innerHTML = '';
+    document.getElementById('expenseForm').reset();
+    document.getElementById('expenseForm').style.display = 'block';
+    document.getElementById('successMessage').style.display = 'none';
+    addItem();
+};
+
+window.onload = function() {
+    addItem();
+};
+</script>
+</body>
+</html>
