@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="每日記帳">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="每日記帳">
     <title>👛 每日記帳</title>
-  <meta name="robots" content="noindex">
+    <meta name="robots" content="noindex">
     <link rel="apple-touch-icon" href="docs/favicon.png">
-    <link rel="icon" href="docs/favicon.ico" type="image/png">
+    <link rel="icon" href="docs/favicon.png" type="image/png">
     <style>
         body {
             font-family: 'Noto Sans TC', sans-serif;
@@ -17,9 +18,12 @@
             margin: 0;
             padding: 20px;
             display: flex;
-            flex-direction: column; /* 垂直排列 body 內元素 */
-            justify-content: center; /* 水平置中 */
-            align-items: center; /* 垂直置中改為置頂，但為了讓 form-container 置中，body 仍維持 center */
+            flex-direction: column;
+            /* 垂直排列 body 內元素 */
+            justify-content: center;
+            /* 水平置中 */
+            align-items: center;
+            /* 垂直置中改為置頂，但為了讓 form-container 置中，body 仍維持 center */
             /*min-height: 100vh;*/
         }
 
@@ -74,7 +78,7 @@
             background-position-y: center;
             background-size: 1.5em;
             padding-right: 2.5em;
-            width:100%;
+            width: 100%;
         }
 
         button[type="submit"],
@@ -82,7 +86,8 @@
         .remove-btn,
         #popup button,
         #test-popup-button,
-    .info-icon { /* 將 info-icon 加入按鈕通用樣式 */
+        .info-icon {
+            /* 將 info-icon 加入按鈕通用樣式 */
             padding: 13px 25px;
             border: none;
             border-radius: 8px;
@@ -95,12 +100,18 @@
 
         button[type="submit"] {
             background-color: #ffb74d;
-            display: block; /* 水平置中 */
-            margin-left: auto; /* 水平置中 */
-            margin-right: auto; /* 水平置中 */
-            width: 100%; /* 拉長為約三倍 (原寬度預估約 23%) */
-            margin-top: 45px; /* 與上方元素間隔 */
-            margin-bottom: 10px; /* 新增：向下移動間距 */
+            display: block;
+            /* 水平置中 */
+            margin-left: auto;
+            /* 水平置中 */
+            margin-right: auto;
+            /* 水平置中 */
+            width: 100%;
+            /* 拉長為約三倍 (原寬度預估約 23%) */
+            margin-top: 45px;
+            /* 與上方元素間隔 */
+            margin-bottom: 10px;
+            /* 新增：向下移動間距 */
         }
 
         button[type="submit"]:hover {
@@ -108,13 +119,17 @@
         }
 
         button[onclick="addRow()"] {
-            background-color: #4CAF50; /* 綠色新增按鈕 */
-            margin-right: 10px; /* 與刪除按鈕間隔 */
-            margin-top: 0; /* 移除預設的 margin-top */
+            background-color: #4CAF50;
+            /* 綠色新增按鈕 */
+            margin-right: 10px;
+            /* 與刪除按鈕間隔 */
+            margin-top: 0;
+            /* 移除預設的 margin-top */
         }
 
         button[onclick="addRow()"]:hover {
-            background-color: #45a049; /* Hover 時顏色略深 */
+            background-color: #45a049;
+            /* Hover 時顏色略深 */
         }
 
 
@@ -138,17 +153,17 @@
             align-items: center;
         }
 
-        .row > .form-group {
+        .row>.form-group {
             flex: 1;
             margin-right: 15px;
             min-width: 150px;
         }
 
-        .row > .form-group:last-child {
+        .row>.form-group:last-child {
             margin-right: 0;
         }
 
-        .row > .remove-btn {
+        .row>.remove-btn {
             flex-grow: 0;
             flex-shrink: 0;
             align-self: flex-end;
@@ -156,10 +171,14 @@
         }
 
         .button-amount-container {
-            display: flex; /* Flexbox 佈局 */
-            justify-content: space-between; /* 水平分散對齊 */
-            align-items: center; /* 垂直置中對齊 */
-            margin-top: 20px; /* 與上方表單 rows 間隔 */
+            display: flex;
+            /* Flexbox 佈局 */
+            justify-content: space-between;
+            /* 水平分散對齊 */
+            align-items: center;
+            /* 垂直置中對齊 */
+            margin-top: 20px;
+            /* 與上方表單 rows 間隔 */
         }
 
 
@@ -167,9 +186,12 @@
             font-size: 22px;
             font-weight: bold;
             color: #795548;
-            text-align: left; /* 總金額靠左對齊 */
-            margin-bottom: 0; /* 移除 total-amount 原本的 margin-bottom */
-            margin-top: 0; /* 確保垂直對齊 */
+            text-align: left;
+            /* 總金額靠左對齊 */
+            margin-bottom: 0;
+            /* 移除 total-amount 原本的 margin-bottom */
+            margin-top: 0;
+            /* 確保垂直對齊 */
         }
 
         /* 彈窗和遮罩樣式 */
@@ -180,37 +202,49 @@
             width: 100%;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.6);
-            display: none; /* 初始狀態隱藏彈窗 */
+            display: none;
+            /* 初始狀態隱藏彈窗 */
             justify-content: center;
-            align-items: flex-start; /* 彈窗置頂顯示 */
+            align-items: center; /* 垂直置中 */
+            /* 彈窗置頂顯示 */
             z-index: 1000;
-            padding-top: 50px; /* 彈窗距離頂部一些距離，避免緊貼邊緣 */
-            overflow-y: auto; /* 內容超出時允許垂直滾動 */
+            padding: 0; /* 移除原 padding */
+            overflow-y: auto;
+            /* 內容超出時允許垂直滾動 */
         }
 
         #popup {
-            background-color: #fffaf0; /* 彈窗背景色與 form-container 一致 */
+            background-color: #fffaf0;
+            /* 彈窗背景色與 form-container 一致 */
             padding: 30px;
-            border-radius: 15px; /* 彈窗圓角與 form-container 一致 */
+            border-radius: 15px;
+            /* 彈窗圓角與 form-container 一致 */
             text-align: center;
             width: 90%;
             max-width: 400px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1); /* 彈窗陰影與 form-container 一致 */
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            /* 彈窗陰影與 form-container 一致 */
         }
 
         #popup h3 {
             color: #5d4037;
             margin-top: 0;
             margin-bottom: 20px;
-            font-size: 1.2em; /* 彈窗標題文字略為縮小，更柔和 */
-            font-weight: bold; /* 彈窗標題加粗，維持重點 */
+            font-size: 1.2em;
+            /* 彈窗標題文字略為縮小，更柔和 */
+            font-weight: bold;
+            /* 彈窗標題加粗，維持重點 */
         }
 
         #popup button {
-            background-color: #ffb74d; /* 彈窗按鈕顏色與 submit 按鈕一致 */
-            width: 44%; /* 彈窗按鈕寬度自動調整，更符合按鈕文字 */
-            padding: 15px 30px; /* 彈窗按鈕左右內距加大，更好按 */
-            margin: 0px 5px; /* 彈窗按鈕左右間距縮小，更緊湊 */
+            background-color: #ffb74d;
+            /* 彈窗按鈕顏色與 submit 按鈕一致 */
+            width: 44%;
+            /* 彈窗按鈕寬度自動調整，更符合按鈕文字 */
+            padding: 15px 30px;
+            /* 彈窗按鈕左右內距加大，更好按 */
+            margin: 0px 5px;
+            /* 彈窗按鈕左右間距縮小，更緊湊 */
         }
 
         #popup button:hover {
@@ -224,7 +258,7 @@
             text-align: left;
         }
 
-    /* 類型說明彈窗樣式 */
+        /* 類型說明彈窗樣式 */
         #categoryInfoOverlay {
             position: fixed;
             top: 0;
@@ -232,19 +266,26 @@
             width: 100%;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.6);
-            display: none; /* 初始狀態隱藏彈窗 */
+            display: none;
+            /* 初始狀態隱藏彈窗 */
             justify-content: center;
-            align-items: flex-start; /* 彈窗置頂顯示 */
-            z-index: 1001; /* 確保疊加層級高於其他彈窗 */
-            padding-top: 50px; /* 彈窗距離頂部一些距離 */
-            overflow-y: auto; /* 內容超出時允許滾動 */
+            align-items: flex-start;
+            /* 彈窗置頂顯示 */
+            z-index: 1001;
+            /* 確保疊加層級高於其他彈窗 */
+            padding-top: 50px;
+            /* 彈窗距離頂部一些距離 */
+            overflow-y: auto;
+            /* 內容超出時允許滾動 */
         }
 
         #categoryInfoPopup {
-            background-color: #fffaf0; /* 彈窗背景色 */
+            background-color: #fffaf0;
+            /* 彈窗背景色 */
             padding: 30px;
             border-radius: 15px;
-            text-align: left; /* 內文靠左對齊 */
+            text-align: left;
+            /* 內文靠左對齊 */
             width: 90%;
             max-width: 400px;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
@@ -256,64 +297,101 @@
             margin-bottom: 20px;
             font-size: 1.2em;
             font-weight: bold;
-        text-align: center; /* 標題置中對齊 */
+            text-align: center;
+            /* 標題置中對齊 */
         }
 
-    #categoryInfoPopup p {
-        margin-bottom: 10px; /* 段落間距 */
-        line-height: 1.4; /* 行高 */
-    }
+        #categoryInfoPopup p {
+            margin-bottom: 10px;
+            /* 段落間距 */
+            line-height: 1.4;
+            /* 行高 */
+        }
 
         #categoryInfoPopup button {
-            background-color: #ffb74d; /* 按鈕顏色 */
-            width: auto; /* 寬度隨內容自適應 */
+            background-color: #ffb74d;
+            /* 按鈕顏色 */
+            width: auto;
+            /* 寬度隨內容自適應 */
             padding: 12px 30px;
-        margin: 20px auto 0 auto; /* 調整按鈕外邊距，使其水平置中 */
-        display: block; /* 讓按鈕變成塊級元素，以便使用 margin: auto 實現水平置中 */
+            margin: 20px auto 0 auto;
+            /* 調整按鈕外邊距，使其水平置中 */
+            display: block;
+            /* 讓按鈕變成塊級元素，以便使用 margin: auto 實現水平置中 */
         }
 
         #categoryInfoPopup button:hover {
             background-color: #ffa726;
         }
 
-    .category-descriptions {
-        margin-bottom: 20px; /* 與關閉按鈕間隔 */
-    }
+        .category-descriptions {
+            margin-bottom: 20px;
+            /* 與關閉按鈕間隔 */
+        }
 
 
         /* 小小的測試按鈕樣式 */
         #test-popup-button {
-            background-color: #ccc; /* 測試按鈕背景色，灰色 */
-            color: #666; /* 測試按鈕文字顏色，深灰色 */
-            font-size: 0.9em; /* 測試按鈕字體略小 */
-            padding: 8px 15px; /* 測試按鈕內距縮小 */
-            margin-top: 20px; /* 與上方元素間隔 */
+            background-color: #ccc;
+            /* 測試按鈕背景色，灰色 */
+            color: #666;
+            /* 測試按鈕文字顏色，深灰色 */
+            font-size: 0.9em;
+            /* 測試按鈕字體略小 */
+            padding: 8px 15px;
+            /* 測試按鈕內距縮小 */
+            margin-top: 20px;
+            /* 與上方元素間隔 */
             margin-left: auto;
             margin-right: auto;
-            display: block; /* 水平置中 */
-            width: auto; /* 寬度隨內容自適應 */
-            margin-bottom: 20px; /* 與下方元素間隔 */
+            display: block;
+            /* 水平置中 */
+            width: auto;
+            /* 寬度隨內容自適應 */
+            margin-bottom: 20px;
+            /* 與下方元素間隔 */
         }
 
         #test-popup-button:hover {
-            background-color: #ddd; /* Hover時顏色略微變亮 */
+            background-color: #ddd;
+            /* Hover時顏色略微變亮 */
             color: #555;
         }
 
-    /* 資訊符號樣式 */
-    .info-icon {
-        justify-content: center; /* 水平置中 */
-        opacity:50%;
-        align-items: center; /* 垂直置中 */
-        font-size: 0.9em; /* 字體大小 */
-        text-align: center;
-        cursor: pointer;
-        margin-left: 5px; /* 與文字間隔 */
-        padding: 0; /* 移除內邊距 */
-    }
+        /* 資訊符號樣式 */
+        .info-icon {
+            justify-content: center;
+            /* 水平置中 */
+            opacity: 50%;
+            align-items: center;
+            /* 垂直置中 */
+            font-size: 0.9em;
+            /* 字體大小 */
+            text-align: center;
+            cursor: pointer;
+            margin-left: 5px;
+            /* 與文字間隔 */
+            padding: 0;
+            /* 移除內邊距 */
+        }
 
         .info-icon:hover {
-            opacity:100%;
+            opacity: 100%;
+        }
+
+        /* 提交按鈕禁用樣式 */
+        .submit-button[disabled] {
+            background-color: #bdbdbd; /* 灰色背景 */
+            color: #fff; /* 白色文字 */
+            cursor: default; /* 靜止鼠標符號 */
+            opacity: 0.7; /* 降低透明度 */
+        }
+
+        /* 提交按鈕啟用樣式（恢復原樣式） */
+        .submit-button:not([disabled]) {
+            background-color: #ffb74d; /* 原顏色 */
+            cursor: pointer; /* 恢復手指符號 */
+            opacity: 1; /* 恢復不透明度 */
         }
 
 
@@ -349,10 +427,10 @@
                 padding: 15px;
                 font-size: 0.95em;
             }
-          
+
             input[type="text"],
-            input[type="number"]{
-              width: calc(100% - 32px);
+            input[type="number"] {
+                width: calc(100% - 32px);
             }
 
             button[type="submit"],
@@ -360,31 +438,47 @@
             .remove-btn,
             #popup button,
             #test-popup-button,
-        .info-icon { /* 手機螢幕彈窗按鈕樣式同步調整，也包含測試按鈕 */
+            .info-icon {
+                /* 手機螢幕彈窗按鈕樣式同步調整，也包含測試按鈕 */
                 font-size: 0.95em;
                 margin-top: 8px;
             }
 
-            button[type="submit"] { /* 手機螢幕下提交按鈕維持置中拉長 */
+            .submit-button-container {
+                position: fixed;
+                bottom: 0;
+                left: 0;
                 width: 100%;
-                margin-top: 20px; /* 手機螢幕下提交按鈕與上方間隔 */
-                margin-bottom: 20px; /* 手機螢幕下提交按鈕下外距 */
+                background-color: #fff; /* 可選：設定背景色 */
+                padding: 10px; /* 可選：設定內邊距 */
+                box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.1); /* 可選：添加陰影 */
+            }
+
+            button[type="submit"] {
+                /* 手機螢幕下提交按鈕維持置中拉長 */
+                width: 100%;
+                margin: 0; /* 移除原 margin */
             }
 
             .button-amount-container {
-                flex-direction: column; /* 手機螢幕下垂直排列 */
-                align-items: stretch; /* 手機螢幕下按鈕和總金額都拉伸 */
+                flex-direction: column;
+                /* 手機螢幕下垂直排列 */
+                align-items: stretch;
+                /* 手機螢幕下按鈕和總金額都拉伸 */
             }
 
             button[onclick="addRow()"] {
-                margin-right: 0; /* 手機螢幕下移除按鈕右邊距 */
-                margin-bottom: 10px; /* 手機螢幕下與總金額間隔 */
+                margin-right: 0;
+                /* 手機螢幕下移除按鈕右邊距 */
+                margin-bottom: 10px;
+                /* 手機螢幕下與總金額間隔 */
             }
 
             .total-amount {
                 font-size: 20px;
                 margin-bottom: 20px;
-                text-align: center; /* 手機螢幕總金額置中 */
+                text-align: center;
+                /* 手機螢幕總金額置中 */
             }
 
 
@@ -395,24 +489,25 @@
                 align-items: stretch;
             }
 
-            .row > .form-group {
+            .row>.form-group {
                 margin-right: 0;
                 margin-bottom: 15px;
                 min-width: auto;
             }
 
-            .row > .remove-btn {
+            .row>.remove-btn {
                 margin-left: 0;
                 align-self: flex-end;
                 margin-top: 10px;
-                width: auto; /* 手機版刪除按鈕寬度自動 */
+                width: auto;
+                /* 手機版刪除按鈕寬度自動 */
             }
 
 
             #popup {
                 padding: 20px;
                 border-radius: 10px;
-                margin:20px
+                margin: 20px
             }
 
             #popup h3 {
@@ -423,10 +518,10 @@
             #popup button {
                 padding: 15px 25px;
                 margin: 8px 10px;
-                width:85%;
+                width: 85%;
             }
 
-        #categoryInfoPopup {
+            #categoryInfoPopup {
                 padding: 20px;
                 border-radius: 10px;
             }
@@ -441,44 +536,56 @@
             }
         }
 
-    /* 電腦版「商家」欄位樣式調整 */
-    @media (min-width: 769px) {
-        /* 確保 .row 也是 flex 容器，並設定對齊和換行 */
-        .row {
-            display: flex;
-            flex-direction: row; /* 水平排列 row 內 form-group */
-            flex-wrap: wrap; /* 允許 form-group 在寬度不足時換行 */
-            align-items: flex-start; /* form-group 靠頂部對齊 */
+        /* 電腦版「商家」欄位樣式調整 */
+        @media (min-width: 769px) {
+
+            /* 確保 .row 也是 flex 容器，並設定對齊和換行 */
+            .row {
+                display: flex;
+                flex-direction: row;
+                /* 水平排列 row 內 form-group */
+                flex-wrap: wrap;
+                /* 允許 form-group 在寬度不足時換行 */
+                align-items: flex-start;
+                /* form-group 靠頂部對齊 */
+            }
+
+            .row>.form-group.merchant-group {
+                display: flex;
+                flex-direction: row;
+                /* 水平排列 select 和 input */
+                align-items: center;
+                /* select 和 input 垂直置中對齊 */
+                margin-top: 20px;
+                /* 與上方欄位間隔 */
+                flex: 1;
+                /* 重要：讓商家欄位佔據 row 的剩餘空間 */
+                min-width: 200px;
+                /* 設定最小寬度，避免過窄 */
+            }
+
+            .row>.form-group.merchant-group>select {
+                flex: 1;
+                /* 下拉選單佔比較多空間 */
+                margin-right: 10px;
+                /* 與輸入框間隔 */
+                width: auto;
+                /* 寬度由 flexbox 控制 */
+            }
+
+            .row>.form-group.merchant-group>input.otherMerchant {
+                flex: 2;
+                /* 輸入框佔較少空間 */
+
+            }
         }
-
-        .row > .form-group.merchant-group {
-            display: flex;
-            flex-direction: row; /* 水平排列 select 和 input */
-            align-items: center; /* select 和 input 垂直置中對齊 */
-            margin-top: 20px; /* 與上方欄位間隔 */
-            flex: 1; /* 重要：讓商家欄位佔據 row 的剩餘空間 */
-            min-width: 200px; /* 設定最小寬度，避免過窄 */
-        }
-
-        .row > .form-group.merchant-group > select {
-            flex: 1; /* 下拉選單佔比較多空間 */
-            margin-right: 10px; /* 與輸入框間隔 */
-            width: auto; /* 寬度由 flexbox 控制 */
-        }
-
-        .row > .form-group.merchant-group > input.otherMerchant {
-            flex: 2; /* 輸入框佔較少空間 */
-
-        }
-    }
-
-
     </style>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 </head>
+
 <body>
     <div class="form-container">
 
@@ -489,14 +596,14 @@
                     <div class="form-group">
                         <label for="category-1"><i class="ri-bookmark-3-fill"></i> 類型*<span class="info-icon" onclick="showCategoryInfo()">ℹ️</span></label>
                         <select id="category-1" class="category" name="category[]" required>
-                    <option value="">-- 支出類別 --</option>
-                    <option value="伙食費">伙食費</option>
-                    <option value="日用品">日用品</option>
-                    <option value="醫療費">醫藥品</option>
-                    <option value="交際費">交際費</option>
-                    <option value="娛樂費">娛樂費</option>
-                    <option value="特別費">特別費</option>
-                    <option value="其它">其它</option>
+                            <option value="">-- 支出類別 --</option>
+                            <option value="伙食費">伙食費</option>
+                            <option value="日用品">日用品</option>
+                            <option value="醫療費">醫藥品</option>
+                            <option value="交際費">交際費</option>
+                            <option value="娛樂費">娛樂費</option>
+                            <option value="特別費">特別費</option>
+                            <option value="其它">其它</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -520,15 +627,15 @@
                     <div class="form-group merchant-group">
                         <label for="merchant-1"><i class="ri-store-3-fill"></i> 商家　</label>
                         <select id="merchant-1" class="merchant" name="merchant[]" onchange="toggleOtherMerchantInput(this)">
-                    <option value="">-- 購買商家 --</option>
-                    <option value="全家">全家</option>
-                    <option value="里仁">里仁</option>
-                    <option value="蝦皮">蝦皮</option>
-                    <option value="7-11">7-11</option>
-                    <option value="PChome">PChome</option>
-                    <option value="其他">其他</option>
+                            <option value="">-- 購買商家 --</option>
+                            <option value="全家">全家</option>
+                            <option value="里仁">里仁</option>
+                            <option value="蝦皮">蝦皮</option>
+                            <option value="7-11">7-11</option>
+                            <option value="PChome">PChome</option>
+                            <option value="其他">其他</option>
                         </select>
-                         <input type="text" class="otherMerchant" name="otherMerchant[]" style="display:none;" placeholder="請填寫商家名稱">
+                        <input type="text" class="otherMerchant" name="otherMerchant[]" style="display:none;" placeholder="請填寫商家名稱">
                     </div>
                     <button type="button" class="remove-btn" onclick="removeRow(1)"><i class="ri-delete-bin-line"></i> 刪除</button>
                 </div>
@@ -538,25 +645,26 @@
                 <div class="total-amount" id="total-amount">總金額：0 元</div>
             </div>
 
-
-            <button type="submit" class="submit-button"><i class="ri-check-line"></i> 提交</button>
+            <div class="submit-button-container">
+                <button type="submit" class="submit-button" disabled><i class="ri-check-line"></i> 提交</button>
+            </div>
         </form>
     </div>
 
     <button id="test-popup-button" onclick="showTestPopup()">Test 彈跳視窗</button>
 
- <div id="categoryInfoOverlay">
+    <div id="categoryInfoOverlay">
         <div id="categoryInfoPopup">
             <h3>類型說明</h3>
-        <div class="category-descriptions">
-            <p>🍔 伙食費：進食費用，不含送禮</p>
-            <p>👕 日用品：不可食用、日常必要消耗品，衛浴、廚房、服飾等</p>
-            <p>💊 醫療費：醫療行為產生費用，就醫或藥品購買</p>
-            <p>🎭 娛樂費：含購買物品(遊戲機)、遊樂設施等放鬆身心的費用</p>
-            <p>😀 交際費：只要該物品非家人自行受用，都歸類此處</p>
-            <p>💎 特別費：非必要或單價高 1、2 年內不重複購買(費用每月平攤)</p>
-            <p>➕ 其它：工作、學習需求(書本)等</p>
-        </div>
+            <div class="category-descriptions">
+                <p>🍔 伙食費：進食費用，不含送禮</p>
+                <p>👕 日用品：不可食用、日常必要消耗品，衛浴、廚房、服飾等</p>
+                <p>💊 醫療費：醫療行為產生費用，就醫或藥品購買</p>
+                <p>🎭 娛樂費：含購買物品(遊戲機)、遊樂設施等放鬆身心的費用</p>
+                <p>😀 交際費：只要該物品非家人自行受用，都歸類此處</p>
+                <p>💎 特別費：非必要或單價高 1、2 年內不重複購買(費用每月平攤)</p>
+                <p>➕ 其它：工作、學習需求(書本)等</p>
+            </div>
             <button onclick="hideCategoryInfo()">關閉</button>
         </div>
     </div>
@@ -583,6 +691,26 @@
                 }
             }
             document.getElementById('total-amount').innerText = `總金額：${totalAmount} 元`;
+            checkExpenseData();
+        }
+
+        // 初始載入時檢查
+        window.onload = function () {
+            checkExpenseData();
+        };
+
+// 檢查是否有填寫支出資料，並更新提交按鈕狀態
+        function checkExpenseData() {
+            let hasExpense = false;
+            for (let i = 1; i <= rowCount; i++) {
+                const amount = document.getElementById(`amount-${i}`)?.value;
+                if (amount) {
+                    hasExpense = true;
+                    break;
+                }
+            }
+            const submitButton = document.querySelector('.submit-button');
+            submitButton.disabled = !hasExpense;
         }
 
         // 新增一行
@@ -640,6 +768,7 @@
             <button type="button" class="remove-btn" onclick="removeRow(${rowCount})"><i class="ri-delete-bin-line"></i> 刪除</button>
             `;
             formRows.appendChild(newRow);
+            checkExpenseData();
         }
 
         // 刪除指定行
@@ -647,10 +776,11 @@
             const row = document.getElementById(`row-${rowId}`);
             row.remove();
             updateTotalAmount(); // 刪除行後更新總金額
+            checkExpenseData();
         }
 
         // 處理表單提交
-        document.getElementById('expenseForm').onsubmit = function (event) {
+        document.getElementById('expenseForm').onsubmit = function(event) {
             event.preventDefault();
             const formData = new FormData(event.target);
             const expenseItems = document.querySelectorAll('.row');
@@ -724,7 +854,7 @@
             document.getElementById('overlay').style.display = 'flex';
         }
 
-    // 顯示類型說明彈跳視窗 (新增)
+        // 顯示類型說明彈跳視窗 (新增)
         function showCategoryInfo() {
             document.getElementById('categoryInfoOverlay').style.display = 'flex';
         }
@@ -747,11 +877,11 @@
         }
 
 
-        window.onload = function () {
+        window.onload = function() {
 
         };
-      
-      // iOS 全螢幕顯示
+
+        // iOS 全螢幕顯示
         if (window.navigator.standalone) {
             document.documentElement.requestFullscreen();
         }
@@ -761,4 +891,5 @@
         // Disallow: /
     </script>
 </body>
+
 </html>
