@@ -881,6 +881,18 @@
 
         };
 
+        document.getElementById('expenseForm').addEventListener('invalid', function(event) {
+        event.preventDefault(); // 阻止表單預設提交行為
+
+        // 找到第一個未填寫的必填項目
+        const firstInvalidField = event.target.querySelector(':invalid');
+
+        if (firstInvalidField) {
+        // 將該項目滾動到螢幕可見區域
+        firstInvalidField.scrollIntoView({ behavior: 'smooth' });
+        }
+        });
+
         // iOS 全螢幕顯示
         if (window.navigator.standalone) {
             document.documentElement.requestFullscreen();
