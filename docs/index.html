@@ -16,6 +16,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@200..900&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     <style>
         /* 全域樣式設定 */
@@ -44,10 +45,11 @@
 
         /* 標題樣式 */
         h2 {
+            font-family: "Noto Serif TC", serif;
             color: #5d4037;
             text-align: center;
             margin-bottom: 25px;
-            font-size: 30px;
+            font-size: 35px;
             font-weight: bold;
         }
 
@@ -110,6 +112,8 @@
 
         /* 提交按鈕樣式 */
         button[type="submit"] {
+            font-size: 1.2em;
+            font-weight: 700;
             background-color: #ff9800;
             display: block;
             margin: 45px auto 10px;
@@ -117,9 +121,7 @@
             width: 100%;
         }
 
-        button[type="submit"]:hover {
-            background-color: #ffa726;
-        }
+
 
         /* 新增按鈕樣式 */
         button[onclick="addRow()"] {
@@ -144,7 +146,7 @@
         /* 行樣式 */
         .row {
             margin-bottom: 20px;
-            padding: 15px;
+            padding: 25px;
             border-radius: 10px;
             background-color: #fff;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
@@ -244,7 +246,8 @@
             color: #5d4037;
             margin: 0 0 20px;
             /* 簡化 margin 寫法 */
-            font-size: 1.2em;
+            font-size: 1.6em;
+            font-family: "Noto Serif TC", serif;
             font-weight: bold;
             text-align: center;
         }
@@ -332,6 +335,12 @@
         .submit-button:not([disabled]) {
             background-color: #ff9800;
             cursor: pointer;
+            opacity: 0.9;
+        }
+        /* 提交按鈕啟用樣式 */
+        .submit-button:not([disabled]):hover {
+            background-color: #ff9800;
+            cursor: pointer;
             opacity: 1;
         }
 
@@ -348,7 +357,6 @@
             }
 
             h2 {
-                font-size: 24px;
                 margin-bottom: 20px;
             }
 
@@ -393,12 +401,10 @@
             }
 
             button[type="submit"] {
-                font-size: 1.2em;
                 padding: 18px 25px;
                 width: 100%;
                 margin: 0;
                 border-radius: 0;
-                font-weight: 700;
             }
 
             .button-amount-container {
@@ -413,12 +419,12 @@
 
             .total-amount {
                 font-size: 20px;
-                margin-bottom: 20px;
+                margin: 20px;
                 text-align: center;
             }
 
             .row {
-                padding: 10px;
+                padding: 20px;
                 margin-bottom: 15px;
                 flex-direction: column;
                 align-items: stretch;
@@ -479,7 +485,8 @@
                 display: flex;
                 flex-direction: row;
                 align-items: center;
-                margin-top: 20px;
+                /*margin-top: 20px;*/
+                margin-bottom: 0px;
                 flex: 1;
                 min-width: 200px;
             }
@@ -552,7 +559,7 @@
             </div>
             <div class="button-amount-container">
                 <button type="button" onclick="addRow()" class="add-button"><i class="ri-add-line"></i> 新增一筆</button>
-                <div class="total-amount" id="total-amount">總金額：0 元</div>
+                <div class="total-amount" id="total-amount">◖總金額：0 元◗</div>
             </div>
 
             <div class="submit-button-container">
@@ -581,7 +588,7 @@
 
     <div id="overlay">
         <div id="popup">
-            <h3>送出成功！</h3>
+            <h3><i class="ri-check-double-line" style="color: #45a049;"></i> 送出成功！</h3>
             <button onclick="continueFilling()"><i class="ri-restart-line"></i> 繼續填寫</button>
             <button onclick="viewSpreadsheet()"><i class="ri-book-open-line"></i> 查看家計簿</button>
         </div>
@@ -600,7 +607,7 @@
                     totalAmount += parseFloat(amount);
                 }
             }
-            document.getElementById('total-amount').innerText = `總金額：${totalAmount} 元`;
+            document.getElementById('total-amount').innerText = `◖總金額：${totalAmount} 元◗`;
             checkExpenseData();
         }
 
