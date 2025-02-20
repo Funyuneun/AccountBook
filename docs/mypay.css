@@ -1,0 +1,645 @@
+/* 全域樣式設定 */
+body {
+    font-family: 'Noto Sans TC', sans-serif;
+    background-color: #f9f5f0;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 共用樣式 */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 0;
+    overflow-y: auto;
+}
+
+/* 金額輸入框計算功能 */
+.amount-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.amount-container input.amount {
+    flex: 1;
+    font-size: 24px;
+    padding: 10px;
+    text-align: center;
+}
+
+.amount-container .toggle-button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    margin-top: 0px;
+    padding: 0px;
+}
+
+.buttons {
+    display: none;
+    position: absolute;
+    background: white;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    white-space: nowrap;
+}
+
+.buttons.active {
+    display: flex;
+}
+
+.buttons button {
+    margin: 2px;
+    font-size: 15px;
+    padding: 8px 10px;
+    cursor: pointer;
+    background-color: #ff9800;
+}
+
+/* 自訂下拉選單樣式，仿照原生 select 元件 */
+.autocomplete-dropdown,
+.dropdown-content {
+    position: absolute;
+    background-color: #fff !important;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    min-width: 100%;
+    z-index: 100;
+    overflow-y: auto;
+    max-height: 200px;
+    box-sizing: border-box;
+    /* 移除原有的 box-shadow */
+    box-shadow: none;
+}
+
+/* 下拉選單項目基本樣式 */
+.autocomplete-dropdown div,
+.dropdown-content div {
+    padding: 6px 10px;
+    cursor: pointer;
+    color: #333;
+    font-size: 1em;
+}
+
+/* 項目 hover 狀態 */
+.autocomplete-dropdown div:hover,
+.dropdown-content div:hover {
+    background-color: #1967d2;
+    color: #fff;
+}
+
+.popup {
+    text-align: center;
+    background-color: #fffaf0;
+    padding: 30px;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+.popup h3 {
+    color: #5d4037;
+    margin: 0 0 20px;
+    font-size: 1.6em;
+    font-family: "Noto Serif TC", serif;
+    font-weight: bold;
+    text-align: center;
+}
+
+.popup button {
+    background-color: #ff9800;
+    width: auto;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 20px auto 0 auto;
+}
+
+.popup button:hover {
+    background-color: #ffa726;
+}
+
+#categoryInfoPopup {
+    text-align: left;
+}
+
+#categoryInfoPopup button {
+    margin: 20px auto 0 auto;
+    display: block;
+}
+
+/* 表單容器樣式 */
+.form-container {
+    background-color: #fffaf0;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    max-width: 90%;
+    width: 700px;
+    margin-bottom: 30px;
+}
+
+/* 標題樣式 */
+h2 {
+    font-family: "Noto Serif TC", serif;
+    color: #5d4037;
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 35px;
+    font-weight: bold;
+}
+
+/* 表單群組樣式 */
+.form-group {
+    margin-bottom: 10px;
+}
+
+/* 標籤樣式 */
+label {
+    display: block;
+    margin-bottom: 8px;
+    color: #795548;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+/* 輸入框和下拉選單樣式 */
+input[type="text"],
+input[type="number"],
+select {
+    width: calc(100% - 20px);
+    padding: 14px 10px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    font-size: 1em;
+    color: #555;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+/* 下拉選單樣式 */
+select {
+    background-image: url('data:image/svg+xml;utf8,<svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right center;
+    background-size: 1.5em;
+    padding-right: 2.5em;
+    width: 100%;
+}
+
+/* 通用按鈕樣式 */
+button,
+.remove-btn,
+.popup button,
+#test-popup-button,
+.info-icon {
+    padding: 13px 25px;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 22px;
+}
+
+/* 提交按鈕樣式 */
+button[type="submit"] {
+    font-size: 1.2em;
+    font-weight: 700;
+    background-color: #ff9800;
+    display: block;
+    margin: 45px auto 10px;
+    width: 100%;
+    flex: 2;
+}
+
+/* 新增一筆按鈕*/
+button[onclick="addRow()"] {
+    background-color: #4CAF50;
+    margin-right: 10px;
+    margin-top: 0;
+}
+
+button[onclick="addRow()"]:hover {
+    background-color: #45a049;
+}
+
+.submit-button-container button[onclick="addRow()"] {
+    display: none;
+}
+
+.button-amount-container button[onclick="addRow()"] {
+    display: block;
+}
+
+/* 移除按鈕*/
+.remove-btn {
+    background-color: #e57373;
+}
+
+.remove-btn:hover {
+    background-color: #f44336;
+}
+
+/* 行樣式 */
+.row {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    padding: 30px;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.row-top,
+.row-middle,
+.row-bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.row .form-group {
+    flex: 1;
+    margin-right: 15px;
+    min-width: 150px;
+}
+
+.row .form-group:last-child {
+    margin-right: 0;
+}
+
+/* 調整商家欄位的樣式 */
+.row-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.form-group.merchant-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.form-group.merchant-group select,
+.form-group.merchant-group input {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.form-group.merchant-group input.otherMerchant {
+    display: none;
+    /* 默认隐藏 */
+}
+
+/* 金額區塊樣式 */
+.button-amount-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+/* 總金額樣式 */
+.total-amount {
+    font-size: 25px;
+    font-weight: bold;
+    color: #795548;
+    text-align: left;
+    margin: 0;
+}
+
+/* 類型說明區塊樣式 */
+.category-descriptions {
+    margin-bottom: 20px;
+}
+
+/* 測試按鈕樣式 */
+#test-popup-button {
+    background-color: #ccc;
+    color: #666;
+    font-size: 0.9em;
+    padding: 8px 15px;
+    margin: 20px auto;
+    display: block;
+    width: auto;
+}
+
+#test-popup-button:hover {
+    background-color: #ddd;
+    color: #555;
+}
+
+/* 資訊符號樣式 */
+.info-icon {
+    justify-content: center;
+    opacity: 50%;
+    align-items: center;
+    font-size: 0.9em;
+    text-align: center;
+    cursor: pointer;
+    margin-left: 5px;
+    padding: 0;
+}
+
+.info-icon:hover {
+    opacity: 100%;
+}
+
+/* 提交按鈕禁用樣式 */
+.submit-button[disabled] {
+    background-color: #bdbdbd;
+    color: #fff;
+    cursor: default;
+    opacity: 0.7;
+}
+
+/* 提交按鈕啟用樣式 */
+.submit-button:not([disabled]) {
+    background-color: #ff9800;
+    cursor: pointer;
+    opacity: 0.9;
+}
+
+.submit-button:not([disabled]):hover {
+    background-color: #ff9800;
+    cursor: pointer;
+    opacity: 1;
+}
+
+/* 電腦版響應式設計調整 */
+@media (min-width: 769px) {
+    .row {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: flex-start;
+    }
+
+    .row-top {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .row-top .form-group {
+        margin-right: 15px;
+        flex: 1;
+    }
+
+    .row-top .form-group:last-child {
+        margin-right: 0;
+    }
+
+    .row-middle {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .row-middle .form-group {
+        margin-right: 15px;
+        flex: 1;
+    }
+
+    .row-middle .form-group:last-child {
+        margin-right: 0;
+    }
+
+    .row-bottom {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .row-bottom .form-group {
+        flex: 1;
+    }
+
+    .row-bottom .remove-btn {
+        width: auto;
+    }
+
+    /* 商家字段在大屏幕上左右并排 */
+    .form-group.merchant-group {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .form-group.merchant-group label {
+        width: 100%;
+        margin-right: 10px;
+    }
+
+    .form-group.merchant-group select,
+    .form-group.merchant-group input {
+        flex: 1;
+        margin-right: 10px;
+    }
+}
+
+/* 行動版響應式設計調整 */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    .form-container {
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+
+    h2 {
+        margin-bottom: 20px;
+    }
+
+
+    label {
+        font-size: 1.2em;
+        margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    select {
+        padding: 15px;
+        font-size: 0.95em;
+    }
+
+    input[type="text"],
+    input[type="number"] {
+        width: calc(100% - 32px);
+    }
+
+    button,
+    .remove-btn,
+    .popup button,
+    #test-popup-button,
+    .info-icon {
+        font-size: 0.95em;
+        margin-top: 8px;
+    }
+
+    .submit-button-container {
+        display: flex;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: #fff;
+        box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    button[type="submit"] {
+        padding: 18px 25px;
+        width: 100%;
+        margin: 0;
+        border-radius: 0;
+    }
+
+    .button-amount-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .submit-button-container button[onclick="addRow()"] {
+        display: block;
+    }
+
+    .button-amount-container button[onclick="addRow()"] {
+        display: none;
+    }
+
+    button[onclick="addRow()"] {
+        margin-right: 0;
+        border-radius: 0px;
+        flex: 1;
+    }
+
+    .total-amount {
+        font-size: 25px;
+        margin: 20px;
+        text-align: center;
+    }
+
+    .row {
+        padding: 20px;
+        margin-bottom: 15px;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .row-top,
+    .row-middle,
+    .row-bottom {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .row .form-group {
+        margin-right: 0;
+        margin-bottom: 15px;
+        min-width: auto;
+    }
+
+    .row-bottom {
+        display: flex;
+        justify-content: flex-end;
+        width: 100%;
+    }
+
+    .row .remove-btn {
+        margin-left: 0;
+        align-self: flex-end;
+        margin-top: 10px;
+        width: auto;
+    }
+
+    .popup,
+    #categoryInfoPopup {
+        padding: 20px;
+        border-radius: 10px;
+        margin: 20px;
+    }
+
+    .popup h3 {
+        font-size: 1.5em;
+        margin-bottom: 15px;
+    }
+
+    #categoryInfoPopup h3 {
+        font-size: 1.3em;
+        margin-bottom: 15px;
+    }
+
+    .popup button {
+        padding: 15px 25px;
+        margin: 8px 10px;
+        width: 85%;
+    }
+
+    #categoryInfoPopup button {
+        padding: 10px 25px;
+    }
+
+    /* 移动版商家字段上下排列 */
+    .form-group.merchant-group {
+        flex-direction: column;
+    }
+
+    .form-group.merchant-group select,
+    .form-group.merchant-group input {
+        margin-bottom: 5px;
+    }
+}
+
+/* Loading 效果 */
+.loading-spinner {
+    border: 8px solid #f3f3f3;
+    /* Light grey */
+    border-top: 8px solid #ffa726;
+    /* Blue */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

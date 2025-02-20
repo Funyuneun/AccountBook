@@ -7,817 +7,151 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="每日記帳">
-    <title>👛 每日記帳</title>
+    <title>每日記帳</title>
     <meta name="description" content="使用此應用程式輕鬆記錄您的每日開銷。">
     <meta name="robots" content="noindex">
-    <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/Funyuneun/AccountBook/refs/heads/main/docs/favicon.png">
-    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/Funyuneun/AccountBook/refs/heads/main/docs/favicon.png">
-    <link rel="icon" href="docs/favicon.png" type="image/png">
-    <!-- (如果需要)加入字體樣式 -->
+    <link rel="apple-touch-icon"
+        href="https://raw.githubusercontent.com/Funyuneun/AccountBook/refs/heads/main/docs/favicon.png">
+    <link rel="icon" type="image/png"
+        href="https://raw.githubusercontent.com/Funyuneun/AccountBook/refs/heads/main/docs/favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@200..900&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
-    <style>
-        /* 全域樣式設定 */
-        body {
-            font-family: 'Noto Sans TC', sans-serif;
-            background-color: #f9f5f0;
-            color: #333;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* 表單容器樣式 */
-        .form-container {
-            background-color: #fffaf0;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-            max-width: 90%;
-            width: 800px;
-            margin-bottom: 30px;
-        }
-
-        /* 標題樣式 */
-        h2 {
-            font-family: "Noto Serif TC", serif;
-            color: #5d4037;
-            text-align: center;
-            margin-bottom: 25px;
-            font-size: 35px;
-            font-weight: bold;
-        }
-
-        /* 表單群組樣式 */
-        .form-group {
-            margin-bottom: 20px;
-            /* 恢復原本的 margin-bottom，因為後面有用到 */
-        }
-
-        /* 標籤樣式 */
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #795548;
-            font-weight: bold;
-            font-size: 1.1em;
-        }
-
-        /* 輸入框和下拉選單樣式 */
-        input[type="text"],
-        input[type="number"],
-        select {
-            width: calc(100% - 20px);
-            padding: 14px 10px;
-            border-radius: 8px;
-            border: 1px solid #ddd;
-            font-size: 1em;
-            color: #555;
-            appearance: none;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-        }
-
-        /* 下拉選單樣式 */
-        select {
-            background-image: url('data:image/svg+xml;utf8,<svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
-            background-repeat: no-repeat;
-            background-position: right center;
-            /* 簡化寫法 */
-            background-size: 1.5em;
-            padding-right: 2.5em;
-            width: 100%;
-        }
-
-        /* 通用按鈕樣式 */
-        button,
-        .remove-btn,
-        #popup button,
-        #test-popup-button,
-        .info-icon {
-            padding: 13px 25px;
-            border: none;
-            border-radius: 8px;
-            color: white;
-            font-size: 1em;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            margin-top: 10px;
-        }
-
-        /* 提交按鈕樣式 */
-        button[type="submit"] {
-            font-size: 1.2em;
-            font-weight: 700;
-            background-color: #ff9800;
-            display: block;
-            margin: 45px auto 10px;
-            /* 簡化 margin 寫法 */
-            width: 100%;
-        }
-
-
-
-        /* 新增按鈕樣式 */
-        button[onclick="addRow()"] {
-            background-color: #4CAF50;
-            margin-right: 10px;
-            margin-top: 0;
-        }
-
-        button[onclick="addRow()"]:hover {
-            background-color: #45a049;
-        }
-
-        /* 移除按鈕樣式 */
-        .remove-btn {
-            background-color: #e57373;
-        }
-
-        .remove-btn:hover {
-            background-color: #f44336;
-        }
-
-        /* 行樣式 */
-        .row {
-            margin-bottom: 20px;
-            padding: 25px;
-            border-radius: 10px;
-            background-color: #fff;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .row>.form-group {
-            flex: 1;
-            margin-right: 15px;
-            min-width: 150px;
-        }
-
-        .row>.form-group:last-child {
-            margin-right: 0;
-        }
-
-        .row>.remove-btn {
-            flex-grow: 0;
-            flex-shrink: 0;
-            align-self: flex-end;
-            margin-top: 0;
-        }
-
-        /* 金額區塊樣式 */
-        .button-amount-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 20px;
-        }
-
-        /* 總金額樣式 */
-        .total-amount {
-            font-size: 22px;
-            font-weight: bold;
-            color: #795548;
-            text-align: left;
-            margin: 0;
-            /* 簡化 margin 寫法 */
-        }
-
-        /* 彈窗遮罩樣式 */
-        #overlay,
-        #categoryInfoOverlay {
-            /* 合併樣式 */
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
-            display: none;
-            justify-content: center;
-            z-index: 1000;
-            padding: 0;
-            overflow-y: auto;
-        }
-
-        #overlay {
-            align-items: center;
-            /* 垂直置中 */
-        }
-
-        #categoryInfoOverlay {
-            align-items: flex-start;
-            /* 彈窗置頂顯示 */
-            padding-top: 50px;
-            z-index: 1001;
-        }
-
-        /* 彈窗樣式 */
-        #popup,
-        #categoryInfoPopup {
-            /* 合併樣式 */
-            background-color: #fffaf0;
-            padding: 30px;
-            border-radius: 15px;
-            width: 90%;
-            max-width: 400px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        #popup {
-            text-align: center;
-        }
-
-        #categoryInfoPopup {
-            text-align: left;
-        }
-
-        #popup h3,
-        #categoryInfoPopup h3 {
-            /* 合併樣式 */
-            color: #5d4037;
-            margin: 0 0 20px;
-            /* 簡化 margin 寫法 */
-            font-size: 1.6em;
-            font-family: "Noto Serif TC", serif;
-            font-weight: bold;
-            text-align: center;
-        }
-
-        #categoryInfoPopup h3 {
-            text-align: center;
-        }
-
-        #categoryInfoPopup p {
-            margin-bottom: 10px;
-            line-height: 1.4;
-        }
-
-        #popup button,
-        #categoryInfoPopup button {
-            /* 合併樣式 */
-            background-color: #ff9800;
-            width: auto;
-            padding: 12px 30px;
-        }
-
-        #popup button {
-            width: 44%;
-            margin: 0px 5px;
-        }
-
-        #categoryInfoPopup button {
-            margin: 20px auto 0 auto;
-            display: block;
-        }
-
-        #popup button:hover,
-        #categoryInfoPopup button:hover {
-            /* 合併樣式 */
-            background-color: #ffa726;
-        }
-
-        /* 類型說明區塊樣式 */
-        .category-descriptions {
-            margin-bottom: 20px;
-        }
-
-        /* 測試按鈕樣式 */
-        #test-popup-button {
-            background-color: #ccc;
-            color: #666;
-            font-size: 0.9em;
-            padding: 8px 15px;
-            margin: 20px auto;
-            /* 簡化 margin 寫法 */
-            display: block;
-            width: auto;
-        }
-
-        #test-popup-button:hover {
-            background-color: #ddd;
-            color: #555;
-        }
-
-        /* 資訊符號樣式 */
-        .info-icon {
-            justify-content: center;
-            opacity: 50%;
-            align-items: center;
-            font-size: 0.9em;
-            text-align: center;
-            cursor: pointer;
-            margin-left: 5px;
-            padding: 0;
-        }
-
-        .info-icon:hover {
-            opacity: 100%;
-        }
-
-        /* 提交按鈕禁用樣式 */
-        .submit-button[disabled] {
-            background-color: #bdbdbd;
-            color: #fff;
-            cursor: default;
-            opacity: 0.7;
-        }
-
-        /* 提交按鈕啟用樣式 */
-        .submit-button:not([disabled]) {
-            background-color: #ff9800;
-            cursor: pointer;
-            opacity: 0.9;
-        }
-        /* 提交按鈕啟用樣式 */
-        .submit-button:not([disabled]):hover {
-            background-color: #ff9800;
-            cursor: pointer;
-            opacity: 1;
-        }
-
-        /* RWD 響應式設計調整 */
-        @media (max-width: 768px) {
-            body {
-                padding: 10px;
-            }
-
-            .form-container {
-                padding: 20px;
-                border-radius: 10px;
-                margin-bottom: 20px;
-            }
-
-            h2 {
-                margin-bottom: 20px;
-            }
-
-            .form-group {
-                margin-bottom: 15px;
-            }
-
-            label {
-                font-size: 1.2em;
-                margin-bottom: 5px;
-            }
-
-            input[type="text"],
-            input[type="number"],
-            select {
-                padding: 15px;
-                font-size: 0.95em;
-            }
-
-            input[type="text"],
-            input[type="number"] {
-                width: calc(100% - 32px);
-            }
-
-            button,
-            .remove-btn,
-            #popup button,
-            #test-popup-button,
-            .info-icon {
-                /* 合併樣式 */
-                font-size: 0.95em;
-                margin-top: 8px;
-            }
-
-            .submit-button-container {
-                position: fixed;
-                bottom: 0;
-                left: 0;
-                width: 100%;
-                background-color: #fff;
-                box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.1);
-            }
-
-            button[type="submit"] {
-                padding: 18px 25px;
-                width: 100%;
-                margin: 0;
-                border-radius: 0;
-            }
-
-            .button-amount-container {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            button[onclick="addRow()"] {
-                margin-right: 0;
-                margin-bottom: 10px;
-            }
-
-            .total-amount {
-                font-size: 20px;
-                margin: 20px;
-                text-align: center;
-            }
-
-            .row {
-                padding: 20px;
-                margin-bottom: 15px;
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .row>.form-group {
-                margin-right: 0;
-                margin-bottom: 15px;
-                min-width: auto;
-            }
-
-            .row>.remove-btn {
-                margin-left: 0;
-                align-self: flex-end;
-                margin-top: 10px;
-                width: auto;
-            }
-
-            #popup,
-            #categoryInfoPopup {
-                /* 合併樣式 */
-                padding: 20px;
-                border-radius: 10px;
-                margin: 20px;
-            }
-
-            #popup h3 {
-                font-size: 1.5em;
-                margin-bottom: 15px;
-            }
-
-            #categoryInfoPopup h3 {
-                font-size: 1.3em;
-                margin-bottom: 15px;
-            }
-
-            #popup button {
-                padding: 15px 25px;
-                margin: 8px 10px;
-                width: 85%;
-            }
-
-            #categoryInfoPopup button {
-                padding: 10px 25px;
-            }
-        }
-
-        /* 電腦版「商家」欄位樣式調整 */
-        @media (min-width: 769px) {
-            .row {
-                display: flex;
-                flex-direction: row;
-                flex-wrap: wrap;
-                align-items: flex-start;
-            }
-
-            .row>.form-group.merchant-group {
-                display: flex;
-                flex-direction: row;
-                align-items: center;
-                /*margin-top: 20px;*/
-                margin-bottom: 0px;
-                flex: 1;
-                min-width: 200px;
-            }
-
-            .row>.form-group.merchant-group>select {
-                flex: 1;
-                margin-right: 10px;
-                width: auto;
-            }
-
-            .row>.form-group.merchant-group>input.otherMerchant {
-                flex: 2;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="/mypay.css">
 </head>
 
 <body>
     <div class="form-container">
-        <h2>👛 每日記帳</h2>
+        <h2><i class="ri-wallet-3-fill"></i> 每日記帳</h2>
         <form id="expenseForm">
             <div id="form-rows">
                 <div class="row" id="row-1">
-                    <div class="form-group">
-                        <label for="category-1"><i class="ri-bookmark-3-fill"></i> 類型*<span class="info-icon" onclick="showCategoryInfo()">ℹ️</span></label>
-                        <select id="category-1" class="category" name="category[]" required>
-                            <option value="">-- 支出類別 --</option>
-                            <option value="伙食費">伙食費</option>
-                            <option value="日用品">日用品</option>
-                            <option value="醫療費">醫藥品</option>
-                            <option value="交際費">交際費</option>
-                            <option value="娛樂費">娛樂費</option>
-                            <option value="特別費">特別費</option>
-                            <option value="其它">其它</option>
-                        </select>
+                    <div class="row-top">
+                        <!-- 金額欄：使用計算功能 -->
+                        <div class="form-group" style="flex: 2;">
+                            <label for="amount-1"><i class="ri-money-dollar-circle-fill"></i> 金額 *</label>
+                            <div class="amount-container">
+                                <input type="text" id="amount-${rowCount}" class="amount" name="amount[]" required
+                                    onkeydown="handleAmountEnter(event, this)" oninput="updateTotalAmount()">
+                                <button type="button" class="toggle-button" onclick="toggleCalculator(1)">🧮</button>
+                            </div>
+                            <div class="buttons" id="buttonPanel-1">
+                                <button type="button" onclick="insertSymbol(1, '+')"><i
+                                        class="ri-add-line"></i></button>
+                                <button type="button" onclick="insertSymbol(1, '-')"><i
+                                        class="ri-subtract-line"></i></button>
+                                <button type="button" onclick="insertSymbol(1, '*')"><i
+                                        class="ri-close-line"></i></button>
+                                <button type="button" onclick="insertSymbol(1, '/')"><i
+                                        class="ri-divide-line"></i></button>
+                                <button type="button" onclick="insertSymbol(1, '()')"><i
+                                        class="ri-brackets-line"></i></button>
+                                <button type="button" onclick="calculateResult(1)"><i
+                                        class="ri-equal-line"></i></button>
+                                <button type="button" onclick="clearInput(1)"><i
+                                        class="ri-delete-back-2-fill"></i></button>
+                            </div>
+                        </div>
+                        <div class="form-group" style="flex: 1;">
+                            <label for="category-1"><i class="ri-bookmark-3-fill"></i> 類型*<span class="info-icon"
+                                    onclick="showCategoryInfo()">ℹ️</span></label>
+                            <select id="category-1" class="category" name="category[]" required>
+                                <option value="">-- 支出類別 --</option>
+                                <option value="伙食費">🍔伙食費</option>
+                                <option value="日用品">👕日用品</option>
+                                <option value="醫療費">💊醫藥品</option>
+                                <option value="交際費">🎭交際費</option>
+                                <option value="娛樂費">😀娛樂費</option>
+                                <option value="特別費">💎特別費</option>
+                                <option value="其它">➕其它</option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="amount-1"><i class="ri-money-dollar-circle-fill"></i> 金額 *</label>
-                        <input type="number" id="amount-1" class="amount" name="amount[]" required oninput="updateTotalAmount()">
+                    <div class="row-middle">
+                        <div class="form-group" style="flex: 2">
+                            <label for="item-1"><i class="ri-file-list-3-fill"></i> 項目</label>
+                            <!-- 包入 autocomplete wrapper 與下拉選單區塊 -->
+                            <div class="autocomplete-wrapper" style="position: relative;">
+                                <input type="text" id="item-1" class="item" name="item[]" autocomplete="off">
+                                <div class="autocomplete-dropdown"
+                                    style="display: none; position: absolute; background-color: #f9f9f9; min-width: 100%; box-shadow: 0px 8px 16px rgba(0,0,0,0.2); z-index: 100;">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="payment-1"><i class="ri-refund-fill"></i> 支付</label>
+                            <select id="payment-1" class="payment" name="payment[]">
+                                <option value="">-- 支付方式 --</option>
+                                <option value="台新">台新</option>
+                                <option value="現金">現金</option>
+                                <option value="一銀">一銀</option>
+                                <option value="中信">中信</option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="item-1"><i class="ri-file-list-3-fill"></i> 項目</label>
-                        <input type="text" id="item-1" class="item" name="item[]">
+                    <div class="row-bottom">
+                        <div class="form-group merchant-group">
+                            <label for="merchant-1"><i class="ri-store-3-fill"></i> 商家　</label>
+                            <select id="merchant-1" class="merchant" name="merchant[]"
+                                onchange="toggleOtherMerchantInput(this)">
+                                <option value="">-- 購買商家 --</option>
+                                <option value="全家">全家</option>
+                                <option value="里仁">里仁</option>
+                                <option value="全聯">全聯</option>
+                                <option value="蝦皮">蝦皮</option>
+                                <option value="德克士">德克士</option>
+                                <option value="麥當勞">麥當勞</option>
+                                <option value="7-11">7-11</option>
+                                <option value="PChome">PChome</option>
+                                <option value="其他">其他</option>
+                            </select>
+                            <input type="text" class="otherMerchant" name="otherMerchant[]" style="display:none;flex: 2"
+                                placeholder="請填寫商家名稱">
+                        </div>
+                        <button type="button" class="remove-btn" onclick="removeRow(1)"><i
+                                class="ri-delete-bin-line"></i> 刪除</button>
                     </div>
-                    <div class="form-group">
-                        <label for="payment-1"><i class="ri-refund-fill"></i> 支付</label>
-                        <select id="payment-1" class="payment" name="payment[]">
-                            <option value="">-- 支付方式 --</option>
-                            <option value="台新">台新</option>
-                            <option value="現金">現金</option>
-                            <option value="一銀">一銀</option>
-                            <option value="其他">其他</option>
-                        </select>
-                    </div>
-                    <div class="form-group merchant-group">
-                        <label for="merchant-1"><i class="ri-store-3-fill"></i> 商家　</label>
-                        <select id="merchant-1" class="merchant" name="merchant[]" onchange="toggleOtherMerchantInput(this)">
-                            <option value="">-- 購買商家 --</option>
-                            <option value="全家">全家</option>
-                            <option value="里仁">里仁</option>
-                            <option value="蝦皮">蝦皮</option>
-                            <option value="7-11">7-11</option>
-                            <option value="PChome">PChome</option>
-                            <option value="其他">其他</option>
-                        </select>
-                        <input type="text" class="otherMerchant" name="otherMerchant[]" style="display:none;" placeholder="請填寫商家名稱">
-                    </div>
-                    <button type="button" class="remove-btn" onclick="removeRow(1)"><i class="ri-delete-bin-line"></i> 刪除</button>
                 </div>
             </div>
             <div class="button-amount-container">
-                <button type="button" onclick="addRow()" class="add-button"><i class="ri-add-line"></i> 新增一筆</button>
                 <div class="total-amount" id="total-amount">◖總金額：0 元◗</div>
+                <button type="button" onclick="addRow()" class="add-button"><i class="ri-add-line"></i> 新增一筆</button>
             </div>
-
             <div class="submit-button-container">
+                <button type="button" onclick="addRow()" class="add-button"><i class="ri-add-line"></i> 新增一筆</button>
                 <button type="submit" class="submit-button" disabled><i class="ri-check-line"></i> 提交</button>
             </div>
         </form>
     </div>
-
     <button id="test-popup-button" onclick="showTestPopup()">Test 彈跳視窗</button>
-
-    <div id="categoryInfoOverlay">
-        <div id="categoryInfoPopup">
+    <div id="categoryInfoOverlay" class="overlay">
+        <div id="categoryInfoPopup" class="popup">
             <h3>類型說明</h3>
             <div class="category-descriptions">
-                <p>🍔 伙食費：進食費用，不含送禮</p>
-                <p>👕 日用品：不可食用、日常必要消耗品，衛浴、廚房、服飾等</p>
-                <p>💊 醫療費：醫療行為產生費用，就醫或藥品購買</p>
-                <p>🎭 娛樂費：含購買物品(遊戲機)、遊樂設施等放鬆身心的費用</p>
-                <p>😀 交際費：只要該物品非家人自行受用，都歸類此處</p>
-                <p>💎 特別費：非必要或單價高 1、2 年內不重複購買(費用每月平攤)</p>
+                <p>🍔伙食費：進食費用，不含送禮</p>
+                <p>👕日用品：不可食用、日常必要消耗品，衛浴、廚房、服飾等</p>
+                <p>💊醫療費：醫療行為產生費用，就醫或藥品購買</p>
+                <p>🎭娛樂費：含購買物品(遊戲機)、遊樂設施等放鬆身心的費用</p>
+                <p>😀交際費：只要該物品非家人自行受用，都歸類此處</p>
+                <p>💎特別費：非必要或單價高 1、2 年內不重複購買(費用每月平攤)</p>
                 <p>➕ 其它：工作、學習需求(書本)等</p>
             </div>
             <button onclick="hideCategoryInfo()">關閉</button>
         </div>
     </div>
-
-    <div id="overlay">
-        <div id="popup">
+    <div id="overlay" class="overlay">
+        <div id="popup" class="popup">
             <h3><i class="ri-check-double-line" style="color: #45a049;"></i> 送出成功！</h3>
             <button onclick="continueFilling()"><i class="ri-restart-line"></i> 繼續填寫</button>
             <button onclick="viewSpreadsheet()"><i class="ri-book-open-line"></i> 查看家計簿</button>
         </div>
     </div>
-
-
-    <script>
-        let rowCount = 1;
-
-        // 計算金額總和
-        function updateTotalAmount() {
-            let totalAmount = 0;
-            for (let i = 1; i <= rowCount; i++) {
-                const amount = document.getElementById(`amount-${i}`)?.value;
-                if (amount) {
-                    totalAmount += parseFloat(amount);
-                }
-            }
-            document.getElementById('total-amount').innerText = `◖總金額：${totalAmount} 元◗`;
-            checkExpenseData();
-        }
-
-        // 初始載入時檢查
-        window.onload = function() {
-            checkExpenseData();
-        };
-
-        // 檢查是否有填寫支出資料，並更新提交按鈕狀態
-        function checkExpenseData() {
-            let hasExpense = false;
-            for (let i = 1; i <= rowCount; i++) {
-                const amount = document.getElementById(`amount-${i}`)?.value;
-                if (amount) {
-                    hasExpense = true;
-                    break;
-                }
-            }
-            const submitButton = document.querySelector('.submit-button');
-            submitButton.disabled = !hasExpense;
-        }
-
-        // 新增一行
-        function addRow() {
-            rowCount++;
-            const formRows = document.getElementById('form-rows');
-            const newRow = document.createElement('div');
-            newRow.classList.add('row');
-            newRow.id = `row-${rowCount}`;
-            newRow.innerHTML = `
-            <div class="form-group">
-                <label for="category-${rowCount}"><i class="ri-bookmark-3-fill"></i> 類型*<span class="info-icon" onclick="showCategoryInfo()">ℹ️</span></label>
-                <select id="category-${rowCount}" class="category" name="category[]" required>
-                    <option value="">-- 支出類別 --</option>
-                    <option value="伙食費">伙食費</option>
-                    <option value="日用品">日用品</option>
-                    <option value="醫療費">醫藥品</option>
-                    <option value="交際費">交際費</option>
-                    <option value="娛樂費">娛樂費</option>
-                    <option value="特別費">特別費</option>
-                    <option value="其它">其它</option>
-                    </select>
-            </div>
-            <div class="form-group">
-                <label for="amount-${rowCount}"><i class="ri-money-dollar-circle-fill"></i> 金額 *</label>
-                <input type="number" id="amount-${rowCount}" class="amount" name="amount[]" required oninput="updateTotalAmount()">
-            </div>
-            <div class="form-group">
-                <label for="item-${rowCount}"><i class="ri-file-list-3-fill"></i> 項目項目</label>
-                <input type="text" id="item-${rowCount}" class="item" name="item[]">
-            </div>
-            <div class="form-group">
-                <label for="payment-${rowCount}"><i class="ri-refund-fill"></i> 支付</label>
-                <select id="payment-${rowCount}" class="payment" name="payment[]">
-                    <option value="">-- 支付方式 --</option>
-                    <option value="台新">台新</option>
-                    <option value="現金">現金</option>
-                    <option value="一銀">一銀</option>
-                    <option value="其他">其他</option>
-                    </select>
-            </div>
-            <div class="form-group merchant-group">
-                <label for="merchant-${rowCount}"><i class="ri-store-3-fill"></i> 商家　</label>
-                <select id="merchant-${rowCount}" class="merchant" name="merchant[]" onchange="toggleOtherMerchantInput(this)">
-                    <option value="">-- 購買商家 --</option>
-                    <option value="全家">全家</option>
-                    <option value="里仁">里仁</option>
-                    <option value="蝦皮">蝦皮</option>
-                    <option value="7-11">7-11</option>
-                    <option value="PChome">PChome</option>
-                    <option value="其他">其他</option>
-                </select>
-                 <input type="text" class="otherMerchant" name="otherMerchant[]" style="display:none;" placeholder="請填寫商家名稱">
-            </div>
-            <button type="button" class="remove-btn" onclick="removeRow(${rowCount})"><i class="ri-delete-bin-line"></i> 刪除</button>
-            `;
-            formRows.appendChild(newRow);
-            checkExpenseData();
-        }
-
-        // 刪除指定行
-        function removeRow(rowId) {
-            const row = document.getElementById(`row-${rowId}`);
-            row.remove();
-            updateTotalAmount(); // 刪除行後更新總金額
-            checkExpenseData();
-        }
-
-        // 處理表單提交
-        document.getElementById('expenseForm').onsubmit = function(event) {
-            event.preventDefault();
-            const formData = new FormData(event.target);
-            const expenseItems = document.querySelectorAll('.row');
-            let submittedCount = 0;
-
-            expenseItems.forEach(item => {
-                let merchantValue = item.querySelector('.merchant').value;
-                const otherMerchantValue = item.querySelector('.otherMerchant').value;
-
-                if (merchantValue === '其他' && otherMerchantValue) {
-                    merchantValue = otherMerchantValue;
-                }
-
-                const params = new URLSearchParams({
-                    category: item.querySelector('.category').value,
-                    item: item.querySelector('.item').value,
-                    amount: item.querySelector('.amount').value,
-                    payment: item.querySelector('.payment').value,
-                    merchant: merchantValue,
-                }).toString();
-
-                fetch('https://script.google.com/macros/s/AKfycbznllpLnhuXFDf_5zlx4UDYY-ownczQpVbe9aNyAH5cl7A2qvMm0moTFa-7aI51dpT7/exec?action=add&' + params)
-                    .then(response => response.text())
-                    .then(data => {
-                        submittedCount++;
-                        if (submittedCount === expenseItems.length) {
-                            document.getElementById('expenseForm').style.display = 'none';
-                            document.getElementById('overlay').style.display = 'flex';
-                        }
-                    })
-                    .catch(error => {
-                        alert('提交時發生錯誤，請稍後再試');
-                        console.error('Error:', error);
-                    });
-            });
-        };
-
-        // 清空表單資料
-        function clearForm() {
-            for (let i = 1; i <= rowCount; i++) {
-                document.getElementById(`item-${i}`).value = '';
-                document.getElementById(`amount-${i}`).value = '';
-                document.getElementById(`category-${i}`).value = ''; // 清空類別選擇
-                document.getElementById(`payment-${i}`).value = ''; // 清空支付方式選擇
-                document.getElementById(`merchant-${i}`).value = ''; // 清空商家選擇
-                const otherMerchantInput = document.getElementById(`merchant-${i}`).closest('.row').querySelector('.otherMerchant');
-                if (otherMerchantInput) {
-                    otherMerchantInput.style.display = 'none'; // 隱藏 "其他商家" 輸入框
-                    otherMerchantInput.value = ''; // 清空 "其他商家" 輸入框的值
-                }
-            }
-            updateTotalAmount(); // 清空後更新總金額
-        }
-
-
-        // 繼續填寫表單
-        function continueFilling() {
-            // 隱藏遮罩和彈窗
-            document.getElementById('overlay').style.display = 'none';
-            document.getElementById('expenseForm').style.display = 'block'; // 重新顯示表單
-            clearForm(); // 清空表單
-        }
-
-        // 查看家計簿
-        function viewSpreadsheet() {
-            window.open('https://docs.google.com/spreadsheets/d/1-9jGuyXQsBmb_R_YgcFcGaEE0cmjNplfklivnRHoZ9E/edit?gid=187669044#gid=187669044', '_blank');
-        }
-
-        // 顯示測試彈跳視窗 (新增)
-        function showTestPopup() {
-            document.getElementById('overlay').style.display = 'flex';
-        }
-
-        // 顯示類型說明彈跳視窗 (新增)
-        function showCategoryInfo() {
-            document.getElementById('categoryInfoOverlay').style.display = 'flex';
-        }
-
-        // 隱藏類型說明彈跳視窗 (新增)
-        function hideCategoryInfo() {
-            document.getElementById('categoryInfoOverlay').style.display = 'none';
-        }
-
-        function toggleOtherMerchantInput(selectElement) {
-            const row = selectElement.closest('.row');
-            const otherMerchantInput = row.querySelector('.otherMerchant');
-
-            otherMerchantInput.style.display = selectElement.value === "其他" ? "block" : "none";
-            if (selectElement.value === "其他") {
-                otherMerchantInput.required = true;
-            } else {
-                otherMerchantInput.required = false;
-            }
-        }
-
-
-        window.onload = function() {
-
-        };
-
-        document.getElementById('expenseForm').addEventListener('invalid', function(event) {
-            event.preventDefault(); // 阻止表單預設提交行為
-
-            // 找到第一個未填寫的必填項目
-            const firstInvalidField = event.target.querySelector(':invalid');
-
-            if (firstInvalidField) {
-                // 將該項目滾動到螢幕可見區域
-                firstInvalidField.scrollIntoView({
-                    behavior: 'smooth'
-                });
-            }
-        });
-
-        // iOS 全螢幕顯示
-        if (window.navigator.standalone) {
-            document.documentElement.requestFullscreen();
-        }
-    </script>
+    <div id="loading" class="overlay" style="display: none;">
+        <div class="loading-spinner"></div>
+    </div>
+    <script src="/mypay.js"></script>
 </body>
 
 </html>
