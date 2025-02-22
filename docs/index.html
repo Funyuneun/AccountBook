@@ -1,156 +1,147 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="每日記帳">
-    <title>每日記帳</title>
-    <meta name="description" content="使用此應用程式輕鬆記錄您的每日開銷。">
-    <meta name="robots" content="noindex">
-    <link rel="apple-touch-icon"
-        href="https://raw.githubusercontent.com/Funyuneun/AccountBook/refs/heads/main/docs/favicon.png">
-    <link rel="icon" type="image/png" href="favicon.png" alt="favicon">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@200..900&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="mypay.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="每日記帳">
+  <title>每日記帳</title>
+  <meta name="description" content="使用此應用程式輕鬆記錄您的每日開銷。">
+  <meta name="robots" content="noindex">
+  <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/Funyuneun/AccountBook/refs/heads/main/docs/favicon.png">
+  <link rel="icon" type="image/png" href="favicon.png" alt="favicon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@200..900&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.6.0/fonts/remixicon.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="mypay.css">
 </head>
-
 <body>
-    <div class="form-container">
-        <h2><i class="ri-wallet-3-fill"></i> 每日記帳</h2>
-        <form id="expenseForm">
-            <div id="form-rows">
-                <div class="row" id="row-1">
-                    <div class="row-top">
-                        <!-- 金額欄：使用計算功能 -->
-                        <div class="form-group" style="flex: 2;">
-                            <label for="amount-1"><i class="ri-money-dollar-circle-fill"></i> 金額 *</label>
-                            <div class="amount-container">
-                                <input type="text" id="amount-${rowCount}" class="amount" name="amount[]" required
-                                    onkeydown="handleAmountEnter(event, this)" oninput="updateTotalAmount()">
-                                <button type="button" class="toggle-button" onclick="toggleCalculator(1)">🧮</button>
-                            </div>
-                            <div class="buttons" id="buttonPanel-1">
-                                <button type="button" onclick="insertSymbol(1, '+')"><i
-                                        class="ri-add-line"></i></button>
-                                <button type="button" onclick="insertSymbol(1, '-')"><i
-                                        class="ri-subtract-line"></i></button>
-                                <button type="button" onclick="insertSymbol(1, '*')"><i
-                                        class="ri-close-line"></i></button>
-                                <button type="button" onclick="insertSymbol(1, '/')"><i
-                                        class="ri-divide-line"></i></button>
-                                <button type="button" onclick="insertSymbol(1, '()')"><i
-                                        class="ri-brackets-line"></i></button>
-                                <button type="button" onclick="calculateResult(1)"><i
-                                        class="ri-equal-line"></i></button>
-                                <button type="button" onclick="clearInput(1)"><i
-                                        class="ri-delete-back-2-fill"></i></button>
-                            </div>
-                        </div>
-                        <div class="form-group" style="flex: 1;">
-                            <label for="category-1"><i class="ri-bookmark-3-fill"></i> 類型*<span class="info-icon"
-                                    onclick="showCategoryInfo()">ℹ️</span></label>
-                            <select id="category-1" class="category" name="category[]" required>
-                                <option value="">-- 支出類別 --</option>
-                                <option value="伙食費">🍔伙食費</option>
-                                <option value="日用品">👕日用品</option>
-                                <option value="醫療費">💊醫藥品</option>
-                                <option value="交際費">🎭交際費</option>
-                                <option value="娛樂費">😀娛樂費</option>
-                                <option value="特別費">💎特別費</option>
-                                <option value="其它">➕其它</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row-middle">
-                        <div class="form-group" style="flex: 2">
-                            <label for="item-1"><i class="ri-file-list-3-fill"></i> 項目</label>
-                            <!-- 包入 autocomplete wrapper 與下拉選單區塊 -->
-                            <div class="autocomplete-wrapper" style="position: relative;">
-                                <input type="text" id="item-1" class="item" name="item[]" autocomplete="off">
-                                <div class="autocomplete-dropdown"
-                                    style="display: none; position: absolute; background-color: #f9f9f9; min-width: 100%; box-shadow: 0px 8px 16px rgba(0,0,0,0.2); z-index: 100;">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="payment-1"><i class="ri-refund-fill"></i> 支付</label>
-                            <select id="payment-1" class="payment" name="payment[]">
-                                <option value="">-- 支付方式 --</option>
-                                <option value="台新">台新</option>
-                                <option value="現金">現金</option>
-                                <option value="一銀">一銀</option>
-                                <option value="中信">中信</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row-bottom">
-                        <div class="form-group merchant-group">
-                            <label for="merchant-1"><i class="ri-store-3-fill"></i> 商家　</label>
-                            <select id="merchant-1" class="merchant" name="merchant[]"
-                                onchange="toggleOtherMerchantInput(this)">
-                                <option value="">-- 購買商家 --</option>
-                                <option value="全家">全家</option>
-                                <option value="里仁">里仁</option>
-                                <option value="全聯">全聯</option>
-                                <option value="蝦皮">蝦皮</option>
-                                <option value="德克士">德克士</option>
-                                <option value="麥當勞">麥當勞</option>
-                                <option value="7-11">7-11</option>
-                                <option value="PChome">PChome</option>
-                                <option value="其他">其他</option>
-                            </select>
-                            <input type="text" class="otherMerchant" name="otherMerchant[]" style="display:none;flex: 2"
-                                placeholder="請填寫商家名稱">
-                        </div>
-                        <button type="button" class="remove-btn" onclick="removeRow(1)"><i
-                                class="ri-delete-bin-line"></i> 刪除</button>
-                    </div>
-                </div>
+  <div class="form-container">
+    <h2><i class="ri-wallet-3-fill"></i> 每日記帳</h2>
+    <form id="expenseForm">
+      <div id="form-rows">
+        <!-- 使用 template 新增行，初始不直接寫入任何 row -->
+      </div>
+      <!-- 定義新增行的模板，所有需要動態替換 rowCount 的部分皆用 {rowId} 標記 -->
+      <template id="rowTemplate">
+        <div class="row" id="row-{rowId}" data-row-id="{rowId}">
+          <div class="row-top">
+            <div class="form-group" style="flex: 2;">
+              <label for="amount-{rowId}"><i class="ri-money-dollar-circle-fill"></i> 金額 *</label>
+              <div class="amount-container">
+                <input type="text" id="amount-{rowId}" class="amount" name="amount[]" required 
+                  onkeydown="handleAmountEnter(event, this)" oninput="updateTotalAmount()">
+                <button type="button" class="toggle-button" onclick="toggleCalculator({rowId})">🧮</button>
+              </div>
+              <div class="buttons" id="buttonPanel-{rowId}">
+                <button type="button" onclick="insertSymbol({rowId}, '+')"><i class="ri-add-line"></i></button>
+                <button type="button" onclick="insertSymbol({rowId}, '-')"><i class="ri-subtract-line"></i></button>
+                <button type="button" onclick="insertSymbol({rowId}, '*')"><i class="ri-close-line"></i></button>
+                <button type="button" onclick="insertSymbol({rowId}, '/')"><i class="ri-divide-line"></i></button>
+                <button type="button" onclick="insertSymbol({rowId}, '()')"><i class="ri-brackets-line"></i></button>
+                <button type="button" onclick="calculateResult({rowId})"><i class="ri-equal-line"></i></button>
+                <button type="button" onclick="clearInput({rowId})"><i class="ri-delete-back-2-fill"></i></button>
+              </div>
             </div>
-            <div class="button-amount-container">
-                <div class="total-amount" id="total-amount">◖總金額：0 元◗</div>
-                <button type="button" onclick="addRow()" class="add-button"><i class="ri-add-line"></i> 新增一筆</button>
+            <div class="form-group" style="flex: 1;">
+              <label for="category-{rowId}"><i class="ri-bookmark-3-fill"></i> 類型*<span class="info-icon" onclick="showCategoryInfo()">ℹ️</span></label>
+              <select id="category-{rowId}" class="category" name="category[]" required>
+                <option value="">-- 支出類別 --</option>
+                <option value="伙食費">🍔伙食費</option>
+                <option value="日用品">👕日用品</option>
+                <option value="醫療費">💊醫藥品</option>
+                <option value="交際費">🎭交際費</option>
+                <option value="娛樂費">😀娛樂費</option>
+                <option value="特別費">💎特別費</option>
+                <option value="其它">➕其它</option>
+              </select>
             </div>
-            <div class="submit-button-container">
-                <button type="button" onclick="addRow()" class="add-button"><i class="ri-add-line"></i> 新增一筆</button>
-                <button type="submit" class="submit-button" disabled><i class="ri-check-line"></i> 提交</button>
+          </div>
+          <div class="row-middle">
+            <div class="form-group" style="flex: 2">
+              <label for="item-{rowId}"><i class="ri-file-list-3-fill"></i> 項目</label>
+              <div class="autocomplete-wrapper" style="position: relative;">
+                <input type="text" id="item-{rowId}" class="item" name="item[]" autocomplete="off">
+                <div class="autocomplete-dropdown" style="display: none; position: absolute; background-color: #f9f9f9; min-width: 100%; box-shadow: 0px 8px 16px rgba(0,0,0,0.2); z-index: 100;"></div>
+              </div>
             </div>
-        </form>
-    </div>
-    <button id="test-popup-button" onclick="showTestPopup()">Test 彈跳視窗</button>
-    <div id="categoryInfoOverlay" class="overlay">
-        <div id="categoryInfoPopup" class="popup">
-            <h3>類型說明</h3>
-            <div class="category-descriptions">
-                <p>🍔伙食費：進食費用，不含送禮</p>
-                <p>👕日用品：不可食用、日常必要消耗品，衛浴、廚房、服飾等</p>
-                <p>💊醫療費：醫療行為產生費用，就醫或藥品購買</p>
-                <p>🎭娛樂費：含購買物品(遊戲機)、遊樂設施等放鬆身心的費用</p>
-                <p>😀交際費：只要該物品非家人自行受用，都歸類此處</p>
-                <p>💎特別費：非必要或單價高 1、2 年內不重複購買(費用每月平攤)</p>
-                <p>➕ 其它：工作、學習需求(書本)等</p>
+            <div class="form-group">
+              <label for="payment-{rowId}"><i class="ri-refund-fill"></i> 支付</label>
+              <select id="payment-{rowId}" class="payment" name="payment[]">
+                <option value="">-- 支付方式 --</option>
+                <option value="台新">台新</option>
+                <option value="現金">現金</option>
+                <option value="一銀">一銀</option>
+                <option value="中信">中信</option>
+              </select>
             </div>
-            <button onclick="hideCategoryInfo()">關閉</button>
+          </div>
+          <div class="row-bottom">
+            <div class="form-group merchant-group">
+              <label for="merchant-{rowId}"><i class="ri-store-3-fill"></i> 商家　</label>
+              <select id="merchant-{rowId}" class="merchant" name="merchant[]" onchange="toggleOtherMerchantInput(this)">
+                <option value="">-- 購買商家 --</option>
+                <option value="全家">全家</option>
+                <option value="里仁">里仁</option>
+                <option value="全聯">全聯</option>
+                <option value="蝦皮">蝦皮</option>
+                <option value="德克士">德克士</option>
+                <option value="麥當勞">麥當勞</option>
+                <option value="7-11">7-11</option>
+                <option value="PChome">PChome</option>
+                <option value="其他">其他</option>
+              </select>
+              <input type="text" class="otherMerchant" name="otherMerchant[]" style="display:none;" placeholder="請填寫商家名稱">
+            </div>
+            <button type="button" class="remove-btn" onclick="removeRow({rowId})"><i class="ri-delete-bin-line"></i> 刪除</button>
+          </div>
         </div>
-    </div>
-    <div id="overlay" class="overlay">
-        <div id="popup" class="popup">
-            <h3><i class="ri-check-double-line" style="color: #45a049;"></i> 送出成功！</h3>
-            <button onclick="continueFilling()"><i class="ri-restart-line"></i> 繼續填寫</button>
-            <button onclick="viewSpreadsheet()"><i class="ri-book-open-line"></i> 查看家計簿</button>
-        </div>
-    </div>
-    <div id="loading" class="overlay" style="display: none;">
-        <div class="loading-spinner"></div>
-    </div>
-    <script type="text/javascript" src="mypay.js"></script>
-</body>
+      </template>
+      <div class="button-amount-container">
+        <div class="total-amount" id="total-amount">◖總金額：0 元◗</div>
+        <button type="button" onclick="addRow()" class="add-button"><i class="ri-add-line"></i> 新增一筆</button>
+      </div>
+      <div class="submit-button-container">
+        <button type="button" onclick="addRow()" class="add-button"><i class="ri-add-line"></i> 新增一筆</button>
+        <button type="submit" class="submit-button" disabled><i class="ri-check-line"></i> 提交</button>
+      </div>
+    </form>
+  </div>
 
+  <button id="test-popup-button" onclick="showTestPopup()">Test 彈跳視窗</button>
+  <div id="categoryInfoOverlay" class="overlay">
+    <div id="categoryInfoPopup" class="popup">
+      <h3>類型說明</h3>
+      <div class="category-descriptions">
+        <p>🍔伙食費：進食費用，不含送禮</p>
+        <p>👕日用品：不可食用、日常必要消耗品，衛浴、廚房、服飾等</p>
+        <p>💊醫療費：醫療行為產生費用，就醫或藥品購買</p>
+        <p>🎭娛樂費：含購買物品(遊戲機)、遊樂設施等放鬆身心的費用</p>
+        <p>😀交際費：只要該物品非家人自行受用，都歸類此處</p>
+        <p>💎特別費：非必要或單價高 1、2 年內不重複購買(費用每月平攤)</p>
+        <p>➕ 其它：工作、學習需求(書本)等</p>
+      </div>
+      <button onclick="hideCategoryInfo()">關閉</button>
+    </div>
+  </div>
+
+  <div id="overlay" class="overlay">
+    <div id="popup" class="popup">
+      <h3><i class="ri-check-double-line" style="color: #45a049;"></i> 送出成功！</h3>
+      <p class="data-item">📅 月份：<span id="month"><i class="ri-loop-left-line"></i></span></p>
+      <p class="data-item">🛒 本月花銷：<span id="spending"><i class="ri-loop-left-line"></i></span></p>
+      <p class="data-item">💰 預算餘額：<span id="expense"><i class="ri-loop-left-line"></i></span></p>
+      <button onclick="continueFilling()"><i class="ri-restart-line"></i> 繼續填寫</button>
+      <button onclick="viewSpreadsheet()"><i class="ri-book-open-line"></i> 查看家計簿</button>
+    </div>
+  </div>
+  <div id="loading" class="overlay" style="display: none;">
+    <div class="loading-spinner"></div>
+  </div>
+
+  <script type="text/javascript" src="mypay.js"></script>
+</body>
 </html>
